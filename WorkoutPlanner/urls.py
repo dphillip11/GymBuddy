@@ -12,4 +12,5 @@ urlpatterns = [
     path('calendar/', views.calendar_view, name='calendar'),
     path('calendar/<int:year>/<int:month>/', views.calendar_view, name='calendar'),  # Calendar view with month/year
     path('calendar-item/<int:year>/<int:month>/<int:day>/', views.calendar_item_view, name='calendar_item'),
+    path('update-calendar-item/<int:year>/<int:month>/<int:day>/', views.update_calendar_item, name='u[date_calendar_item'),
 ]

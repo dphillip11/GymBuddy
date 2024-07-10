@@ -1,6 +1,6 @@
 # Libraries
 from datetime import date, timedelta
-from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -122,31 +122,47 @@ def calendar_item_view(request, year, month, day):
     workouts = Workout.objects.all()
     workout_record = WorkoutRecord.objects.filter(date=item_date).first()
 
-    workout_history = None
-    is_completed = False
-    is_today = False
-    is_future = False
+    workout_history = WorkoutHistory(
+        workout=Workout(name="-"),
+        is_completed = False,
+        is_today=(item_date == today),
+        is_future=(item_date > today),
+    )
 
     if workout_record:
-        is_completed = True
-        workout_history = workout_record
-    else:
-        workout_history = WorkoutHistory(
-            workout=Workout(name="No workout assigned"),
-            is_completed=False,
-            is_today=(item_date == today),
-            is_future=(item_date > today)
+        workout_history.is_completed = (
+            workout_record.date <= date.today() and
+            ExerciseRecord.objects.filter(date=workout_record.date).exists()
         )
+        workout_history.workout = workout_record.workout
     
     context = {
         'day': day,
         'month': month,
         'year': year,
         'workout_history': workout_history,
-        'workouts': workouts,
-        'is_completed': is_completed,
-        'is_today': item_date == today,
-        'is_future': item_date > today,
+        'workouts': workouts
     }
 
     return render(request, 'workoutplanner/calendar_item.html', context)
+
+def update_calendar_item(request, year, month, day):
+    """
+    Handles POST requests to update the workout record for a specific calendar item.
+    """
+    if request.method == 'POST':
+        workout_id = request.POST.get('workout_id')
+        calendar_date = date(year, month, day)
+        workout_record, created = WorkoutRecord.objects.update_or_create(
+                date=calendar_date,
+                defaults={'workout_id': workout_id}
+            )
+        workout_record.workout = Workout.objects.get(id=workout_id)
+        workout_record.save()
+        return HttpResponse("OK")
+    return HttpResponseBadRequest("Invalid request method")
+        # workout_history = WorkoutRecord.objects.get_or_create(date(year, month, day))
+        # print(workout_history)
+        # workout = Workout.objects.get(id=workout_id)
+        # workout_history.workout = workout
+        # workout_history.save()

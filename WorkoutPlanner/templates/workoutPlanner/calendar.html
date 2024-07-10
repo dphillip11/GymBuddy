@@ -55,12 +55,55 @@
     function updateCalendarForMonth(year, month) {
         // Update each day in the current month
         {% for day in days %}
-            updateCalendarItem(year, month, {{ day }});
+            (function(day) {
+                setTimeout(() => {
+                    updateCalendarItem(year, month, day);
+                }, 50 * day);  // 50ms delay multiplied by day for staggered requests
+            })({{ day }});
         {% endfor %}
     }
 
     $(document).ready(function() {
         updateCalendarForMonth({{ year }}, {{ month }});
+    });
+
+    $(document).ready(function() {
+        // Call update function on select change
+        $(document).on('change', 'select[name="workout"]', async function() {
+            var workoutId = $(this).val();
+            var year = $(this).siblings('input[name="year"]').val();
+            var month = $(this).siblings('input[name="month"]').val();
+            var day = $(this).siblings('input[name="day"]').val();
+            if (workoutId) {
+                try {
+                    const response = await fetch(`/update-calendar-item/${year}/${month}/${day}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': $(this).siblings('input[name="csrfmiddlewaretoken"]').val()
+                        },
+                        body: new URLSearchParams({
+                            'workout_id': workoutId
+                        })
+                    });
+    
+                    if (response.ok) {
+                        updateCalendarForMonth({{ year }}, {{ month }});
+                        {% comment %} updateCalendarItem({{ year }}, {{ month }}, {{ day }}); {% endcomment %}
+                    } else {
+                        console.error('Server error:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                }
+            }
+        });
+    
+
+        // Automatically trigger update for the calendar items on page load
+        {% for day in days %}
+            updateCalendarItem({{ year }}, {{ month }}, {{ day }});
+        {% endfor %}
     });
 </script>
 {% endblock %}

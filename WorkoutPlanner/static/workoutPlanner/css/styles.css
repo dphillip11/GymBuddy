@@ -72,7 +72,7 @@
 }
 
 .nav-date {
-    font-size: 1.2em;
+    font-size: 2.5em;
     font-weight: bold;
 }
 
@@ -92,7 +92,8 @@
     padding: 10px;
     border-radius: 5px;
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color)
 }
 
 .calendar-item-content h1 {
