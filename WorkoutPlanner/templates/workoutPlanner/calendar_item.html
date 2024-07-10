@@ -18,6 +18,7 @@
         {% csrf_token %}
         <select name="workout" id="workout-select-{{ year }}-{{ month }}-{{ day }}">
             <option value="">Select a Workout</option>
+            <option value="-1">None</option>
             {% for workout in workouts %}
                 <option value="{{ workout.id }}">{{ workout.name }}</option>
             {% endfor %}

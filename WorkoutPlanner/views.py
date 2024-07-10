@@ -152,17 +152,31 @@ def update_calendar_item(request, year, month, day):
     """
     if request.method == 'POST':
         workout_id = request.POST.get('workout_id')
+
         calendar_date = date(year, month, day)
+
+        if workout_id == '-1':
+            # Delete the WorkoutRecord for the specified date
+            WorkoutRecord.objects.filter(date=calendar_date).delete()
+            return HttpResponse("OK")
+        
+        if not workout_id:
+            return HttpResponseBadRequest("Missing workout_id")
+                
+        try:
+            workout = Workout.objects.get(id=workout_id)
+        except Workout.DoesNotExist:
+            return HttpResponseBadRequest("Workout not found")
+
+        # Update or create the WorkoutRecord
         workout_record, created = WorkoutRecord.objects.update_or_create(
-                date=calendar_date,
-                defaults={'workout_id': workout_id}
-            )
-        workout_record.workout = Workout.objects.get(id=workout_id)
-        workout_record.save()
+            date=calendar_date,
+            defaults={
+                'workout': workout,
+                'user': User.objects.get(id=1)  # Default user
+            }
+        )
+
         return HttpResponse("OK")
+
     return HttpResponseBadRequest("Invalid request method")
-        # workout_history = WorkoutRecord.objects.get_or_create(date(year, month, day))
-        # print(workout_history)
-        # workout = Workout.objects.get(id=workout_id)
-        # workout_history.workout = workout
-        # workout_history.save()
