@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block additional_scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="calendar-nav-bar">
+    <div class="nav-content">
+        <a href="{% url 'calendar' year=previous_year month=previous_month %}" class="nav-button">Previous Month</a>
+        <span class="nav-date">{{ month_name }} {{ year }}</span>
+        <a href="{% url 'calendar' year=next_year month=next_month %}" class="nav-button">Next Month</a>
+    </div>
+</div>
+<div id="calendar-container" class="calendar-grid">
+    {% for day in days %}
+        <div id="calendar-item-{{ year }}-{{ month }}-{{ day }}" class="calendar-item">
+            <!-- Placeholder for AJAX-loaded content -->
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block body_scripts %}
+<script>
+    function updateCalendarItem(year, month, day) {
+        $.ajax({
+            url: '/calendar-item/' + year + '/' + month + '/' + day + '/',
+            method: 'GET',
+            success: function(data) {
+                $('#calendar-item-' + year + '-' + month + '-' + day).html(data);
+            }
+        });
+    }
+
+    function changeMonth(offset) {
+        var currentYear = {{ year }};
+        var currentMonth = {{ month }};
+        var newDate = new Date(currentYear, currentMonth - 1 + offset, 1);
+        var newYear = newDate.getFullYear();
+        var newMonth = newDate.getMonth() + 1;
+
+        $.ajax({
+            url: '/calendar/' + newYear + '/' + newMonth + '/',
+            method: 'GET',
+            success: function(data) {
+                $('#calendar-container').html($(data).find('#calendar-container').html());
+                updateCalendarForMonth(newYear, newMonth);
+            }
+        });
+    }
+
+    function updateCalendarForMonth(year, month) {
+        // Update each day in the current month
+        {% for day in days %}
+            updateCalendarItem(year, month, {{ day }});
+        {% endfor %}
+    }
+
+    $(document).ready(function() {
+        updateCalendarForMonth({{ year }}, {{ month }});
+    });
+</script>
+{% endblock %}

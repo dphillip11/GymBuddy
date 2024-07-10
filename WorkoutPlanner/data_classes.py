@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 from typing import List
+from datetime import date
+from .models import Workout
 
 @dataclass
 class ExerciseData:
@@ -18,3 +20,10 @@ class WorkoutDetailData:
     """
     workout: 'Workout'
     exercises_data: List[ExerciseData]
+
+@dataclass
+class WorkoutHistory:
+    workout: Workout
+    is_completed: bool
+    is_today: bool
+    is_future: bool

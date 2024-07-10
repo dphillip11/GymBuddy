@@ -1,11 +1,11 @@
-.exercise-component, .exercise-record-component, .muscle-group-tags, .muscle-group-tag, .workout-list-item{
+.exercise-component, .exercise-record-component, .muscle-group-tags, .muscle-group-tag, .workout-list-item, .entry-form, .entry-form p, .entry-form div, .calendar-item{
     border: solid black 2px;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.exercise-component, .workout-list-item{
+.exercise-component, .workout-list-item, #id_muscle_groups,.entry-form p, .entry-form div{
     font-size: 16px;
     background-color: var(--secondary-bg-color);
     color: var(--secondary-text-color);
@@ -20,16 +20,92 @@
     font-size: 14px;
 }
 
-.muscle-group-tags {
+.muscle-group-tags, #id_muscle_groups{
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
     background-color: var(--primary-bg-color);
 }
 
-.muscle-group-tag{
+#id_muscle_groups{
+    background-color: var(--secondary-bg-color);
+}
+
+.muscle-group-tag, #id_muscle_groups div, .entry-form{
     background-color: var(--highlight-bg-color);
     color: var(--highlight-contrast-color);
     padding: 5px 10px;
     border-radius: 3px;
 }
+
+#calendar-nav-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-bg-color);
+    padding: 10px 0;
+    border-bottom: 2px solid var(--highlight-bg-color);
+    position: sticky; /* Make the navbar stick to the top */
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    height: 80px;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+}
+
+.nav-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+.nav-date {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#calendar-container {
+    margin-top: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for the days of the week */
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.calendar-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.calendar-item-content h1 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.calendar-item-content h2 {
+    margin: 5px 0;
+}
+
+.calendar-item-content button {
+    margin-top: 10px;
+}
+
+

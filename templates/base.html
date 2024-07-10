@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'workoutPlanner/css/styles.css' %}">
     <script src="{% static 'theme.js' %}" defer></script>
-    <script src="{% static 'timer.js' %}" defer></script>    
+    {% block additional_scripts %}{% endblock %} 
 </head>
 <body>
     <header>
         <nav id="nav-buttons">
+            <a href="{% url 'calendar' %}"><button>Calendar</button></a>
             <a href="{% url 'workout_list' %}"><button>Workouts</button></a>
             <a href="{% url 'exercise_list' %}"><button>Exercises</button></a>
             <button id="theme-toggle">Toggle Theme</button>           
@@ -23,7 +24,7 @@
 
     <main>
         <!-- spacer.html -->
-        <div style="height:50px;"></div>
+        <div style="height:80px;"></div>
         {% block content %}
         {% endblock %} 
     </main>
@@ -31,5 +32,6 @@
     <footer>
         <p>&copy; 2024 GymBuddy</p>
     </footer>
+    {% block body_scripts %}{% endblock %} 
 </body>
 </html>

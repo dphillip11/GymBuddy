@@ -4,11 +4,8 @@
 
 {% block content %}
     <h1>Exercises</h1>
-    <ul>
-        {% for data in exercises_data %}
-            {% include 'workoutplanner/exercise_component.html' with exercise=data.exercise muscle_groups=data.muscle_groups %}
-        {% empty %}
-        <li>No exercises available.</li>
-        {% endfor %}
-    </ul>
+    {% for data in exercises_data %}
+        {% include 'workoutplanner/exercise_component.html' with exercise=data.exercise muscle_groups=data.muscle_groups %}
+    {% endfor %}
+    {% include 'workoutplanner/add_exercise_form.html' with form=form %}
 {% endblock %}

@@ -1,0 +1,20 @@
+<div class="calendar-item">
+    <h1>{{ day }}-{{ month }}-{{ year }}</h1>
+    {% if is_completed %}
+        <h2 style="color:green;">Workout: {{ workout_history.workout.name }}</h2>
+    {% else %}
+        <h2 style="color:red;">{{ workout_history.workout.name }}</h2>
+        {% if is_today %}
+            <a href="{% url 'gymPartner' %}"><button>Do workout</button></a>
+        {% endif %}
+    {% endif %}
+
+    {% if is_future %}
+        <select name="workout">
+            {% for workout in workouts %}
+                <option value="{{ workout.id }}">{{ workout.name }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+    <button onclick="updateCalendarItem({{ year }}, {{ month }}, {{ day }})">Update</button>
+</div>
