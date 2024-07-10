@@ -1,0 +1,115 @@
+{
+    "muscle_groups": [
+        "Chest",
+        "UpperBack",
+        "LowerBack",
+        "Abs",
+        "Obliques",
+        "Lats",
+        "Quads",
+        "Hamstrings",
+        "Biceps",
+        "Triceps",
+        "Calves",
+        "Delts",
+        "Traps",
+        "Glutes",
+        "Forearms"
+    ],
+    "exercises": [
+        {
+            "name": "Bench Press",
+            "description": "A chest exercise that involves pressing a barbell from chest level to arm's length.",
+            "muscle_groups": ["Chest", "Triceps", "Delts"]
+        },
+        {
+            "name": "Pull Up",
+            "description": "An upper body exercise where you pull yourself up on a bar until your chin is above it.",
+            "muscle_groups": ["UpperBack", "Lats", "Biceps"]
+        },
+        {
+            "name": "Deadlift",
+            "description": "A compound exercise that involves lifting a barbell from the ground to hip level.",
+            "muscle_groups": ["LowerBack", "Hamstrings", "Quads", "Glutes"]
+        },
+        {
+            "name": "Squat",
+            "description": "A lower body exercise where you bend your knees and lower your hips as if sitting back into a chair.",
+            "muscle_groups": ["Quads", "Hamstrings", "Glutes", "Calves"]
+        },
+        {
+            "name": "Plank",
+            "description": "A core strength exercise where you hold a push-up position with your body straight and supported on your elbows and toes.",
+            "muscle_groups": ["Abs", "Obliques", "Delts"]
+        },
+        {
+            "name": "Dumbbell Curl",
+            "description": "An arm exercise where you curl dumbbells from a straight arm position to shoulder level.",
+            "muscle_groups": ["Biceps", "Forearms"]
+        },
+        {
+            "name": "Tricep Dips",
+            "description": "An exercise that targets the triceps by lowering and raising your body using parallel bars.",
+            "muscle_groups": ["Triceps", "Chest", "Delts"]
+        },
+        {
+            "name": "Leg Press",
+            "description": "A lower body exercise performed on a leg press machine to push weights away from your body with your legs.",
+            "muscle_groups": ["Quads", "Hamstrings", "Glutes", "Calves"]
+        },
+        {
+            "name": "Lat Pulldown",
+            "description": "A machine exercise where you pull a weighted bar down towards your chest, targeting the lats.",
+            "muscle_groups": ["Lats", "UpperBack", "Biceps"]
+        },
+        {
+            "name": "Shoulder Press",
+            "description": "An overhead pressing movement targeting the shoulders, triceps, and upper chest.",
+            "muscle_groups": ["Delts", "Triceps", "Chest"]
+        }
+    ],
+    "workouts": [
+        {
+            "exercises": [
+                {"name": "Bench Press", "order": 1},
+                {"name": "Dumbbell Curl", "order": 2},
+                {"name": "Tricep Dips", "order": 3}
+            ]
+        },
+        {
+            "exercises": [
+                {"name": "Pull Up", "order": 1},
+                {"name": "Lat Pulldown", "order": 2},
+                {"name": "Plank", "order": 3}
+            ]
+        },
+        {
+            "exercises": [
+                {"name": "Deadlift", "order": 1},
+                {"name": "Squat", "order": 2},
+                {"name": "Leg Press", "order": 3}
+            ]
+        }
+    ],
+    "users": [
+        {"id": 1},
+        {"id": 2}
+    ],
+    "workout_calendar_entries": [
+        {"user_id": 1, "date": "2024-07-10", "workout_id": 1},
+        {"user_id": 1, "date": "2024-07-12", "workout_id": 2},
+        {"user_id": 2, "date": "2024-07-11", "workout_id": 3}
+    ],
+    "exercise_records": [
+        {"user_id": 1, "exercise_name": "Bench Press", "date": "2024-07-10", "weight": 100, "reps": 10},
+        {"user_id": 1, "exercise_name": "Dumbbell Curl", "date": "2024-07-10", "weight": 25, "reps": 12},
+        {"user_id": 1, "exercise_name": "Tricep Dips", "date": "2024-07-10", "weight": 0, "reps": 15},
+        {"user_id": 1, "exercise_name": "Lat Pulldown", "date": "2024-07-12", "weight": 80, "reps": 12},
+        {"user_id": 2, "exercise_name": "Deadlift", "date": "2024-07-11", "weight": 150, "reps": 8}
+    ],
+    "workout_records": [
+        {"user_id": 1, "workout_id": 1, "date": "2024-07-10"},
+        {"user_id": 1, "workout_id": 2, "date": "2024-07-12"},
+        {"user_id": 2, "workout_id": 3, "date": "2024-07-11"}
+    ]
+}
