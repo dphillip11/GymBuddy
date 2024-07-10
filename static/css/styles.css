@@ -1,0 +1,103 @@
+/* Default (Light) Theme */
+:root {
+    --primary-bg-color: hsl(166, 26%, 50%);
+    --secondary-bg-color: #ff38638b;
+    --secondary-text-color: #0f2a47;
+    --highlight-bg-color: #fad6f8;
+    --highlight-contrast-color: #3618fb;
+    --text-color: #ffc07d;
+    --header-bg-color: #17393a;
+    --workoutday-bg-color: #ffffff;
+    --exercise-bg-color: #f7b7a3;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --toggle-btn-bg-color: #007bff;
+    --toggle-btn-hover-bg-color: #0056b3;
+    --toggle-btn-text-color: #fff;
+    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.2);
+    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] {
+    --primary-bg-color: #2c3e50;
+    --secondary-bg-color: #34495e;
+    --secondary-text-color: #dfe8f1;
+    --highlight-bg-color: #e74c3c;
+    --highlight-contrast-color: #f8ed17;
+    --text-color: #ecf0f1;
+    --header-bg-color: #2980b9;
+    --workoutday-bg-color: #2c3e50;
+    --exercise-bg-color: #e67e22;
+    --shadow-color: rgba(0, 0, 0, 0.6);
+    --toggle-btn-bg-color: #6c757d;
+    --toggle-btn-hover-bg-color: #5a6268;
+    --toggle-btn-text-color: #fff;
+    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.4);
+    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="high-contrast"] {
+    --primary-bg-color: #000000;
+    --secondary-bg-color: #766915;
+    --secondary-text-color: #fcfcf2;
+    --highlight-bg-color: #fff456;
+    --highlight-contrast-color: #1a1906;
+    --text-color: #c6ffc8;
+    --header-bg-color: #5b2100;
+    --workoutday-bg-color: #000000;
+    --exercise-bg-color: #133056;
+    --shadow-color: rgba(255, 255, 255, 0.5);
+    --toggle-btn-bg-color: #f39c12;
+    --toggle-btn-hover-bg-color: #e67e22;
+    --toggle-btn-text-color: #000;
+    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.3);
+    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+a{
+    text-decoration: none;
+}
+
+#nav-buttons
+{
+    display: flex;
+    flex-direction: horizontal;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+button{
+    background-color: var(--toggle-btn-bg-color);
+    color: var(--toggle-btn-text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px var(--toggle-btn-shadow-color);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 16px;
+    margin:15px;
+}
+
+body{
+    background-color: var(--primary-bg-color);
+    color: var(--text-color);
+}
+
+h1,h2,h3,h4{
+    color: var(--secondary-text-color);
+}
+
+button:hover {
+    background-color: var(--toggle-btn-hover-bg-color);
+    box-shadow: 0 6px 12px var(--toggle-btn-hover-shadow-color);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--toggle-btn-hover-bg-color);
+}

@@ -1,0 +1,12 @@
+{# WorkoutPlanner/templates/workoutplanner/workout_list.html #}
+
+{% extends "base.html" %}
+
+{% block title %}Workout List{% endblock %}
+
+{% block content %}
+    <h1>All Workouts</h1>
+    {% for workout in workouts %}
+        <a href="{% url 'workout_detail' workout.id %}"><div class="workout-list-item">{{ workout }}</div></a>
+    {% endfor %}
+{% endblock %}

@@ -40,7 +40,7 @@ class Command(BaseCommand):
 
         # Populate workouts
         for workout_data in data['workouts']:
-            workout = Workout.objects.create()
+            workout, created = Workout.objects.get_or_create(name=workout_data['name'])
             for exercise_info in workout_data['exercises']:
                 exercise = exercise_dict[exercise_info['name']]
                 WorkoutExercise.objects.create(
@@ -53,12 +53,13 @@ class Command(BaseCommand):
         user_dict = {}
         for user_data in data['users']:
             user, created = User.objects.get_or_create(id=user_data['id'])
+            user.save()
             user_dict[user_data['id']] = user
 
         # Populate workout calendar entries
         for entry_data in data['workout_calendar_entries']:
             WorkoutCalendarEntry.objects.create(
-                user=user_dict[entry_data['user_id']],
+                user=user_dict[entry_data['user']],
                 date=parse_date(entry_data['date']),
                 workout_id=entry_data['workout_id']
             )
@@ -66,7 +67,7 @@ class Command(BaseCommand):
         # Populate exercise records
         for record_data in data['exercise_records']:
             ExerciseRecord.objects.create(
-                user=user_dict[record_data['user_id']],
+                user=user_dict[record_data['user']],
                 exercise=exercise_dict[record_data['exercise_name']],
                 date=parse_date(record_data['date']),
                 weight=record_data['weight'],
@@ -76,7 +77,7 @@ class Command(BaseCommand):
         # Populate workout records
         for record_data in data['workout_records']:
             WorkoutRecord.objects.create(
-                user=user_dict[record_data['user_id']],
+                user=user_dict[record_data['user']],
                 workout_id=record_data['workout_id'],
                 date=parse_date(record_data['date'])
             )

@@ -1,0 +1,35 @@
+.exercise-component, .exercise-record-component, .muscle-group-tags, .muscle-group-tag, .workout-list-item{
+    border: solid black 2px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.exercise-component, .workout-list-item{
+    font-size: 16px;
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+}
+
+.workout-list-item:hover{
+    background-color: var(--highlight-bg-color);
+    color: var(--highlight-contrast-color);
+}
+
+.exercise-record-component {
+    font-size: 14px;
+}
+
+.muscle-group-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    background-color: var(--primary-bg-color);
+}
+
+.muscle-group-tag{
+    background-color: var(--highlight-bg-color);
+    color: var(--highlight-contrast-color);
+    padding: 5px 10px;
+    border-radius: 3px;
+}

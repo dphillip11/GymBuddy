@@ -36,10 +36,11 @@ class Workout(models.Model):
     """
     Represents a workout composed of an ordered list of exercises.
     """
+    name = models.CharField(max_length=255, blank=False, null=True)
     exercises = models.ManyToManyField(Exercise, through='WorkoutExercise')
 
     def __str__(self):
-        return f"Workout {self.id}"
+        return self.name
 
 class WorkoutExercise(models.Model):
     """

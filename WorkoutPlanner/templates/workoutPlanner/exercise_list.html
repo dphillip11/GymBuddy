@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Workout Details{% endblock %}
+{% block title %}Exercise List{% endblock %}
 
 {% block content %}
-    <h1>{{ workout.name }}</h1>
+    <h1>Exercises</h1>
     <ul>
-        {% for data in workout_data.exercises_data %}
+        {% for data in exercises_data %}
             {% include 'workoutplanner/exercise_component.html' with exercise=data.exercise muscle_groups=data.muscle_groups %}
         {% empty %}
         <li>No exercises available.</li>
