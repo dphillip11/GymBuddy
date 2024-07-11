@@ -144,7 +144,7 @@ def calendar_item_view(request, year, month, day):
         'workouts': workouts
     }
 
-    return render(request, 'workoutplanner/calendar_item.html', context)
+    return render(request, 'workoutplanner/components/calendar_item.html', context)
 
 def update_calendar_item(request, year, month, day):
     """

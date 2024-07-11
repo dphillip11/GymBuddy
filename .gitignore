@@ -1,3 +1,27 @@
+# Ignore the build directory where the HTML documentation is generated
+docs/build/
+
+# Ignore the Sphinx cache directory
+docs/source/_build/
+docs/source/.doctrees/
+docs/source/.buildinfo
+docs/source/.index.rst
+
+# Ignore the Sphinx environment directory
+docs/source/_static/
+docs/source/_images/
+
+# Ignore the Sphinx configuration cache
+docs/source/.tox/
+docs/source/.nox/
+
+# Ignore the Sphinx log files
+docs/source/*.log
+
+# Ignore Makefile and batch file for documentation generation
+docs/Makefile
+docs/make.bat
+
 # Python
 __pycache__/
 *.py[cod]

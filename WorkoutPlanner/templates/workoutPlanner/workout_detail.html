@@ -5,6 +5,6 @@
 {% block content %}
     <h1>{{ workout_data.workout.name }}</h1>
     {% for data in workout_data.exercises_data %}
-        {% include 'workoutplanner/exercise_component.html' with exercise=data.exercise muscle_groups=data.muscle_groups %}
+        {% include 'workoutplanner/components/exercise_component.html' with exercise=data.exercise muscle_groups=data.muscle_groups %}
     {% endfor %}
 {% endblock %}
