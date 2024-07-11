@@ -1,3 +1,4 @@
+django==4.2  # Replace with the version you are using
 sphinx==5.0.2
 sphinx-rtd-theme
 sphinx-autobuild
