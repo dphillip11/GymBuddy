@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'workoutPlanner/css/styles.css' %}">
 
-    <script src="{% static 'theme.js' %}" defer></script>
-    <script src="{% static 'ajax_request_builder.js' %}" defer></script>
+    <script src="{% static 'js/theme.js' %}" defer></script>
+    <script src="{% static 'js/ajax_request_builder.js' %}" defer></script>
 
     {% comment %} add useful routes to window {% endcomment %}
     <script type="text/javascript">
@@ -28,7 +28,7 @@
         window.csrfToken = '{{ csrf_token }}';
     </script>
 
-    <script src="{% static 'fetch_items.js' %}" defer></script>
+    <script src="{% static 'js/fetch_items.js' %}" defer></script>
 
     {% block additional_scripts %}{% endblock %}
 </head>
