@@ -9,11 +9,7 @@
         <h2 style="color:red;">{{ workout_history.workout.name }}</h2>
     {% endif %}
 
-    {% if workout_history.is_today %}
-        <button>Do workout</button>
-    {% endif %}
-
-    {% if workout_history.is_future %}
+    {% if workout_history.is_future or workout_history.is_today %}
     <form id="update-workout-form-{{ year }}-{{ month }}-{{ day }}" method="post">
         {% csrf_token %}
         <select name="workout" id="workout-select-{{ year }}-{{ month }}-{{ day }}">
@@ -27,5 +23,9 @@
         <input type="hidden" name="month" value="{{ month }}">
         <input type="hidden" name="day" value="{{ day }}">
     </form>
+    {% endif %}
+
+    {% if workout_history.is_today and workout_history.workout.id %}
+        <a href="{% url 'active_workout' workout_history.workout.id %}"><button>Do workout</button></a>
     {% endif %}
 

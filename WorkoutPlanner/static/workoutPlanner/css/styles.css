@@ -1,4 +1,4 @@
-.exercise-component, .exercise-record-component, .muscle-group-tags, .muscle-group-tag, .workout-list-item, .entry-form, .entry-form p, .entry-form div, .calendar-item{
+.previous-exercise-record, .exercise-component, .exercise-record-component, .muscle-group-tags, .muscle-group-tag, .workout-list-item, .entry-form, .entry-form p, .entry-form div, .calendar-item, .workout-item{
     border: solid black 2px;
     border-radius: 5px;
     padding: 10px;
@@ -109,18 +109,17 @@
     margin-top: 10px;
 }
 
-.exercise-records-list{
-    display:flex;
-    flex-direction: row;
+.exercise-records-list li{
+    list-style-type: none;
 }
 
 .exercise-record-component{
     padding:5px;
 }
-        /* <strong>{{ exercise_record.date }}</strong>
-        <p>{{ exercise_record.weight }}</p>
-        <p>{{ exercise_record.reps }}</p>
-    </div>
-</div> */
 
+.workout-item-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
