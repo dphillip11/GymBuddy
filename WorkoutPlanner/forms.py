@@ -1,5 +1,6 @@
 from django import forms
-from .models import Exercise, MuscleGroup
+from .models import Exercise, ExerciseRecord, MuscleGroup, Workout, WorkoutRecord
+
 
 class ExerciseForm(forms.ModelForm):
     """
@@ -24,3 +25,30 @@ class ExerciseForm(forms.ModelForm):
             'description': 'Description',
             'muscle_groups': 'Muscle Groups'
         }
+
+
+class ExerciseRecordForm(forms.ModelForm):
+    """
+    A form for adding or updating exercise records.
+    """
+    class Meta:
+        model = ExerciseRecord
+        fields = ['exercise', 'reps', 'weight', 'date']
+
+
+class WorkoutForm(forms.ModelForm):
+    """
+    A form for adding or updating workouts.
+    """
+    class Meta:
+        model = Workout
+        fields = ['name', 'exercises']
+
+
+class WorkoutRecordForm(forms.ModelForm):
+    """
+    A form for adding or updating workout records.
+    """
+    class Meta:
+        model = WorkoutRecord
+        fields = ['workout', 'date', 'isCompleted']

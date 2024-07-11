@@ -5,13 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}GymBuddy{% endblock %}</title>
+
     {% load static %}
+
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'workoutPlanner/css/styles.css' %}">
+
     <script src="{% static 'theme.js' %}" defer></script>
     <script src="{% static 'ajax_request_builder.js' %}" defer></script>
-    {% block additional_scripts %}{% endblock %} 
+
+    {% comment %} add useful routes to window {% endcomment %}
+    <script type="text/javascript">
+        window.urls = {
+            getActiveWorkoutItem: '{% url "get_active_workout_item" exercise_id=0 %}',
+            getCalendarItem: '{% url "get_calendar_item" year=0 month=0 day=0 %}',
+            getWorkoutDetailItem: '{% url "get_workout_detail_item" workout_id=0 %}',
+            getExerciseDetailItem: '{% url "get_exercise_detail_item" exercise_id=0 %}',
+            getExerciseRecordsItem: '{% url "get_exercise_records_item" exercise_id=0 year=0 month=0 day=0 %}',
+        };
+        window.csrfToken = '{{ csrf_token }}';
+    </script>
+
+    <script src="{% static 'fetch_items.js' %}" defer></script>
+
+    {% block additional_scripts %}{% endblock %}
 </head>
 <body>
     <header>

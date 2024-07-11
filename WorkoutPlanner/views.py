@@ -13,7 +13,7 @@ import calendar
 # Project
 from .forms import ExerciseForm
 from .models import MuscleGroup, MuscleGroupTag, Exercise, Workout, User, WorkoutCalendarEntry, ExerciseRecord, WorkoutRecord
-from .data_classes import ExerciseData, WorkoutDetailData, WorkoutHistory
+from .templates.workoutPlanner.data_classes import ExerciseData, WorkoutDetailData, WorkoutHistory
 from .forms import ExerciseForm
 
 def DefaultUser():
@@ -85,6 +85,28 @@ def active_workout(request, workout_id):
     }
 
     return render(request, 'workoutplanner/active_workout.html', context)
+
+
+def get_workout_item(request, exercise_id):
+    exercise = get_object_or_404(Workout, id=exercise_id)
+    today = now().date()
+    # Get today's records for the exercise
+    todays_records = ExerciseRecord.objects.filter(exercise=exercise, date=today)
+
+    # Get the last date this exercise was performed before today
+    previous_dates = ExerciseRecord.objects.filter(exercise=exercise, date__lt=today).order_by('-date').values_list('date', flat=True)
+    previous_date = previous_dates.first() if previous_dates else None
+
+    # Get the records for the exercise on the last performed date
+    previous_records = ExerciseRecord.objects.filter(exercise=exercise, date=previous_date) if previous_date else []
+
+    context = {
+        'exercise': exercise,
+        'todays_records': todays_records,
+        'previous_records': previous_records,
+    }
+
+    return render(request, 'workoutplanner/components/active_workout_item.html', context)
 
 
 def exercise_list(request):
