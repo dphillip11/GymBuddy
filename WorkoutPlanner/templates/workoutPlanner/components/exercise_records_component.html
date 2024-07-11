@@ -1,0 +1,8 @@
+<div class="exercise-records-list">
+    {% for exercise_record in exercise_records %}
+        <div class="exercise-record-component">
+            <p>{{ exercise_record.weight }} Kg</p>
+            <p>{{ exercise_record.reps }} reps</p>
+        </div>
+    {% endfor %}
+</div>

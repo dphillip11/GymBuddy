@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Active Workout{% endblock %}
+
+{% block content %}
+    <h1>{{ workout.name }}</h1>
+    {% for workout_item in workout_items %}
+        {% include 'workoutplanner/components/active_workout_item.html' with workout_item=workout_item  %}
+    {% endfor %}
+{% endblock %}

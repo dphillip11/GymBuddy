@@ -1,11 +1,13 @@
 # Libraries
 from datetime import date, timedelta
+from django.utils.timezone import now
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
 import calendar
 
 # Project
@@ -14,6 +16,9 @@ from .models import MuscleGroup, MuscleGroupTag, Exercise, Workout, User, Workou
 from .data_classes import ExerciseData, WorkoutDetailData, WorkoutHistory
 from .forms import ExerciseForm
 
+def DefaultUser():
+    return User.objects.get(id=1)
+    
 
 def workout_list(request):
     """
@@ -46,6 +51,40 @@ def workout_detail(request, workout_id):
     }
 
     return render(request, 'workoutplanner/workout_detail.html', context)
+
+
+def active_workout(request, workout_id):
+    """
+    View function for displaying an active workout.
+    """
+    workout = get_object_or_404(Workout, id=workout_id)
+    today = now().date()
+
+    workout_items = []
+
+    for exercise in workout.exercises.all():
+        # Get today's records for the exercise
+        todays_records = ExerciseRecord.objects.filter(exercise=exercise, date=today)
+
+        # Get the last date this exercise was performed before today
+        previous_dates = ExerciseRecord.objects.filter(exercise=exercise, date__lt=today).order_by('-date').values_list('date', flat=True)
+        previous_date = previous_dates.first() if previous_dates else None
+
+        # Get the records for the exercise on the last performed date
+        previous_records = ExerciseRecord.objects.filter(exercise=exercise, date=previous_date) if previous_date else []
+
+        workout_items.append({
+            'exercise': exercise,
+            'todays_records': todays_records,
+            'previous_records': previous_records,
+        })
+
+    context = {
+        'workout': workout,
+        'workout_items': workout_items,
+    }
+
+    return render(request, 'workoutplanner/active_workout.html', context)
 
 
 def exercise_list(request):
@@ -173,10 +212,36 @@ def update_calendar_item(request, year, month, day):
             date=calendar_date,
             defaults={
                 'workout': workout,
-                'user': User.objects.get(id=1)  # Default user
+                'user': DefaultUser()
             }
         )
 
         return HttpResponse("OK")
 
     return HttpResponseBadRequest("Invalid request method")
+
+
+@require_POST
+def add_exercise_record(request):
+    """
+    Handles POST requests to add a new exercise record.
+    """
+    exercise_id = request.POST.get('exercise_id')
+    reps = request.POST.get('reps')
+    weight = request.POST.get('weight')
+
+    # Get the exercise object
+    exercise = get_object_or_404(Exercise, id=exercise_id)
+
+    # Create the exercise record
+    exercise_record = ExerciseRecord.objects.create(
+        exercise=exercise,
+        reps=reps,
+        weight=weight,
+        date=now().date(), 
+        user=DefaultUser()
+    )
+
+    print(exercise_record)
+
+    return HttpResponse("OK")

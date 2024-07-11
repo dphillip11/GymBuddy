@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import List
 from datetime import date
-from .models import Workout
+from .models import Workout, Exercise, ExerciseRecord
 
 @dataclass
 class ExerciseData:
@@ -27,3 +27,13 @@ class WorkoutHistory:
     is_completed: bool
     is_today: bool
     is_future: bool
+
+@dataclass
+class WorkoutItem:
+    """
+    Data class for holding workout information for a single exercise.
+    """
+    exercise: 'Exercise'
+    previous_exercise_records: List['ExerciseRecord']
+    todays_exercise_records: List['ExerciseRecord']
+
