@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse
 
@@ -78,7 +78,20 @@ def workout_view(request, workout_id):
     """
     Display a specific workout.
     """
-    return render(request, 'workoutplanner/pages/workout_page.html', {'workout_id': workout_id})
+    workout = get_object_or_404(Workout, id=workout_id)
+
+    exercise_items = [
+        get_exercise_detail_item_data(exercise.id)
+        for exercise in workout.exercises.all()
+    ]
+
+    context = {
+        'workout': workout,
+        'exercise_items':exercise_items,
+    }
+    
+    # Render the 'workout_page.html' template with the context data
+    return render(request, 'workoutplanner/pages/workout_page.html', context)
 
 
 def workouts_view(request):
