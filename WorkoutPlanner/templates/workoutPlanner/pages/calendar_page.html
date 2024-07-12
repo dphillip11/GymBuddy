@@ -4,12 +4,14 @@
 
 {% block content %}
     <h1>Calendar</h1>
-    <div class="row spaced" id="calendar-nav">
+    <div class="row spaced primary" id="calendar-nav">
         <a href="{{ prev_month_url}}"><button class="tag highlight">Previous Month</button></a>
         <div><h1>{{ month }} {{ year }}</h1></div>
         <a href="{{ next_month_url }}"><button class="tag highlight">Next Month</button></a>
     </div>
+    <div id="calendar-grid">
     {% for item in calendar_items %}
         {% include 'workoutplanner/components/calendar_item.html' with item=item %}
     {% endfor %}
+    </div>
 {% endblock %}

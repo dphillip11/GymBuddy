@@ -1,4 +1,4 @@
-<div class="framed calendar_item {% if item.is_today %}highlight{% endif %}""
+<div class="framed calendar-item secondary {% if item.is_today %}highlight{% endif %}""
 id="calendar_item_{{item.year}}_{{item.month}}_{{item.day}}">
     <h3>{{ item.day }}</h3>
     {% if item.is_today %}<p>(Today)</p>{% endif %}
