@@ -40,6 +40,12 @@ class WorkoutForm(forms.ModelForm):
     """
     A form for adding or updating workouts.
     """
+    exercises = forms.ModelMultipleChoiceField(
+        queryset=Exercise.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
+
     class Meta:
         model = Workout
         fields = ['name', 'exercises']

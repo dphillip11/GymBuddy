@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 
-from ..templates.workoutPlanner.data_queries import (
+from ..data_queries import (
     get_active_workout_item_data,
     get_calendar_item_data,
     get_exercise_detail_item_data,

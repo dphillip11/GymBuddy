@@ -1,0 +1,11 @@
+<div class="framed calendar_item {% if item.is_today %}highlight{% endif %}""
+id="calendar_item_{{item.year}}_{{item.month}}_{{item.day}}">
+    <h3>{{ item.day }}</h3>
+    {% if item.is_today %}<p>(Today)</p>{% endif %}
+    {% if item.is_completed %}<p>(Completed)</p>{% endif %}
+    <ul>
+        {% for workout in item.workout_entries %}
+            <li>{{ workout.name }}</li>
+        {% endfor %}
+    </ul>
+</div>

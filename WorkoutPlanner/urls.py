@@ -1,5 +1,7 @@
 from django.urls import path
 
+from WorkoutPlanner import views
+
 # project
 from .views.pages import (
     workouts_view, workout_view, exercises_view, calendar_view, gymbuddy_view
@@ -18,7 +20,7 @@ urlpatterns = [
     # page routes
     path('', workouts_view, name='index'),
     path('calendar/', calendar_view, name='calendar'),
-    path('exercises/', exercises_view, name='exercise_list'),
+    path('calendar/<int:year>/<int:month>/', calendar_view, name='calendar_with_params'),    path('exercises/', exercises_view, name='exercises'),
     path('gymbuddy/', gymbuddy_view, name='gymbuddy'),
     path('workout/<int:workout_id>/', workout_view, name='workout'),
     path('workouts/', workouts_view, name='workouts'),

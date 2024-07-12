@@ -1,6 +1,6 @@
 import datetime
 # project
-from ...models import Exercise, ExerciseRecord, Workout, WorkoutRecord
+from .models import Exercise, ExerciseRecord, MuscleGroupTag, Workout, WorkoutRecord
 from .data_classes import (
     ActiveWorkoutItemData,
     CalendarItemData,
@@ -45,9 +45,14 @@ def get_calendar_item_data(year, month, day):
     Returns:
         CalendarItemData: The data class instance containing the workout entries for the given date.
     """
-    workout_entries = list(Workout.objects.filter(date__year=year, date__month=month, date__day=day).values('id', 'name', 'description'))
+    workout_records = WorkoutRecord.objects.filter(
+        date__year=year, date__month=month, date__day=day
+    ).select_related('workout')   
+
+    workout_entries = [workout_record.workout for workout_record in workout_records]
+
     is_today = (year, month, day) == (datetime.date.today().year, datetime.date.today().month, datetime.date.today().day)
-    is_completed = Workout.objects.filter(date__year=year, date__month=month, date__day=day, completed=True).exists()
+    is_completed = WorkoutRecord.objects.filter(date__year=year, date__month=month, date__day=day, isCompleted=True).exists()
 
     return CalendarItemData(
         year=year,
@@ -69,15 +74,19 @@ def get_exercise_detail_item_data(exercise_id):
     Returns:
         ExerciseDetailItemData: The data class instance containing details about the exercise.
     """
-    exercise = Exercise.objects.get(id=exercise_id)
-    muscle_groups = list(exercise.muscle_groups.values_list('name', flat=True))
+    try:
+        exercise = Exercise.objects.get(id=exercise_id)
+        muscle_groups = MuscleGroupTag.objects.filter(exercise=exercise).select_related('muscle_group').values_list('muscle_group__name', flat=True)
 
-    return ExerciseDetailItemData(
-        exercise_id=exercise.id,
-        name=exercise.name,
-        description=exercise.description,
-        muscle_groups=muscle_groups
-    )
+        return ExerciseDetailItemData(
+            exercise_id=exercise.id,
+            name=exercise.name,
+            description=exercise.description,
+            muscle_groups=list(muscle_groups)
+        )
+    except:
+        return None
+    
 
 def get_exercise_records_item_data(exercise_id, year, month, day):
     """

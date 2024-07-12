@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Exercises{% endblock %}
+
+{% block content %}
+    <h1>Exercises</h1>
+    {% for item in items %}
+        {% include 'workoutplanner/components/exercise_detail_item.html' with item=item %}
+    {% endfor %}
+    {% include 'workoutplanner/forms/generic_form.html' with form=form %}
+{% endblock %}

@@ -3,8 +3,5 @@
 {% block title %}Workout Details{% endblock %}
 
 {% block content %}
-    <h1>{{ workout_data.workout.name }}</h1>
-    {% for exercise in exercises %}
-        {% include 'workoutplanner/components/exercise_component.html' %}
-    {% endfor %}
+    <h1>Workout Details</h1>
 {% endblock %}

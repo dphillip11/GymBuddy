@@ -1,133 +1,123 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 
 # project
 from ..forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
+from ..models import Exercise, Workout, WorkoutRecord
 
-
+@require_POST
 def create_exercise(request):
     """
     Create a new exercise.
     """
-    if request.method == 'POST':
-        form = ExerciseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('exercise_list')
-    else:
-        form = ExerciseForm()
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = ExerciseForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Exercise created successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def create_exercise_record(request):
     """
     Create a new exercise record.
     """
-    if request.method == 'POST':
-        form = ExerciseRecordForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('exercise_list')  # Redirect to a suitable page
-    else:
-        form = ExerciseRecordForm()
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = ExerciseRecordForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Exercise record created successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def create_workout(request):
     """
     Create a new workout.
     """
-    if request.method == 'POST':
-        form = WorkoutForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('workouts')
-    else:
-        form = WorkoutForm()
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = WorkoutForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Workout created successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def create_workout_record(request):
     """
     Create a new workout record.
     """
-    if request.method == 'POST':
-        form = WorkoutRecordForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('calendar')  # Redirect to a suitable page
-    else:
-        form = WorkoutRecordForm()
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = WorkoutRecordForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Workout record created successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def update_exercise(request, exercise_id):
     """
     Update an existing exercise.
     """
     exercise = get_object_or_404(Exercise, id=exercise_id)
-    if request.method == 'POST':
-        form = ExerciseForm(request.POST, instance=exercise)
-        if form.is_valid():
-            form.save()
-            return redirect('exercise_list')
-    else:
-        form = ExerciseForm(instance=exercise)
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = ExerciseForm(request.POST, instance=exercise)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Exercise updated successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def update_workout(request, workout_id):
     """
     Update an existing workout.
     """
     workout = get_object_or_404(Workout, id=workout_id)
-    if request.method == 'POST':
-        form = WorkoutForm(request.POST, instance=workout)
-        if form.is_valid():
-            form.save()
-            return redirect('workouts')
-    else:
-        form = WorkoutForm(instance=workout)
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = WorkoutForm(request.POST, instance=workout)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Workout updated successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def update_workout_record(request, workout_record_id):
     """
     Update an existing workout record.
     """
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
-    if request.method == 'POST':
-        form = WorkoutRecordForm(request.POST, instance=workout_record)
-        if form.is_valid():
-            form.save()
-            return redirect('calendar')  # Redirect to a suitable page
-    else:
-        form = WorkoutRecordForm(instance=workout_record)
-    return render(request, 'workoutplanner/forms/generic_form.html', {'form': form})
+    form = WorkoutRecordForm(request.POST, instance=workout_record)
+    if form.is_valid():
+        form.save()
+        return HttpResponse("Workout record updated successfully")
+    return HttpResponseBadRequest("Invalid form data")
 
 
+@require_POST
 def delete_exercise(request, exercise_id):
     """
     Delete an existing exercise.
     """
     exercise = get_object_or_404(Exercise, id=exercise_id)
     exercise.delete()
-    return redirect('exercise_list')
+    return HttpResponse("Exercise deleted successfully")
 
 
+@require_POST
 def delete_workout(request, workout_id):
     """
     Delete an existing workout.
     """
     workout = get_object_or_404(Workout, id=workout_id)
     workout.delete()
-    return redirect('workouts')
+    return HttpResponse("Workout deleted successfully")
 
 
+@require_POST
 def delete_workout_record(request, workout_record_id):
     """
     Delete an existing workout record.
     """
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
     workout_record.delete()
-    return redirect('calendar')
+    return HttpResponse("Workout record deleted successfully")

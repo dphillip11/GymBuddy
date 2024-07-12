@@ -1,56 +1,45 @@
-/* Default (Light) Theme */
 :root {
-    --primary-bg-color: hsl(166, 26%, 50%);
-    --secondary-bg-color: #ff38638b;
-    --secondary-text-color: #0f2a47;
-    --highlight-bg-color: #fad6f8;
-    --highlight-contrast-color: #3618fb;
-    --text-color: #ffc07d;
-    --header-bg-color: #17393a;
-    --workoutday-bg-color: #ffffff;
-    --exercise-bg-color: #f7b7a3;
+    --primary-bg-color: #e8ebf7;
+    --primary-hover-color: #c1c3ce;
+    --primary-text-color: #000000;
+    --secondary-bg-color: #acbed8;
+    --primary-hover-color: #8898ae;
+    --secondary-text-color: #ffffff;
+    --highlight-bg-color: #f2d398;
+    --highlight-bg-color-hover: #c7ac7b;
+    --highlight-text-color: #000000;
     --shadow-color: rgba(0, 0, 0, 0.3);
-    --toggle-btn-bg-color: #007bff;
-    --toggle-btn-hover-bg-color: #0056b3;
-    --toggle-btn-text-color: #fff;
-    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.2);
-    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] {
-    --primary-bg-color: #2c3e50;
-    --secondary-bg-color: #34495e;
-    --secondary-text-color: #dfe8f1;
-    --highlight-bg-color: #e74c3c;
-    --highlight-contrast-color: #f8ed17;
-    --text-color: #ecf0f1;
-    --header-bg-color: #2980b9;
-    --workoutday-bg-color: #2c3e50;
-    --exercise-bg-color: #e67e22;
-    --shadow-color: rgba(0, 0, 0, 0.6);
-    --toggle-btn-bg-color: #6c757d;
-    --toggle-btn-hover-bg-color: #5a6268;
-    --toggle-btn-text-color: #fff;
-    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.4);
-    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.5);
+    --primary-bg-color: #172a3a;
+    --primary-hover-color: #335e81;
+    --primary-text-color: #ffffff;
+    --secondary-bg-color: #004346;
+    --primary-hover-color: #007278;
+    --secondary-text-color: #f1f4f7;
+    --highlight-bg-color: #74b3ce;
+    --highlight-bg-color-hover: #87d0ef;
+    --highlight-text-color: #f8f7fa;
+    --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="high-contrast"] {
-    --primary-bg-color: #000000;
-    --secondary-bg-color: #766915;
-    --secondary-text-color: #fcfcf2;
-    --highlight-bg-color: #fff456;
-    --highlight-contrast-color: #1a1906;
-    --text-color: #c6ffc8;
-    --header-bg-color: #5b2100;
-    --workoutday-bg-color: #000000;
-    --exercise-bg-color: #133056;
-    --shadow-color: rgba(255, 255, 255, 0.5);
-    --toggle-btn-bg-color: #f39c12;
-    --toggle-btn-hover-bg-color: #e67e22;
-    --toggle-btn-text-color: #000;
-    --toggle-btn-shadow-color: rgba(0, 0, 0, 0.3);
-    --toggle-btn-hover-shadow-color: rgba(0, 0, 0, 0.4);
+    --primary-bg-color: #eff0d1;
+    --primary-hover-color: #e6f0d1;
+    --primary-text-color: #262730;
+    --secondary-bg-color: #d7c0d0;
+    --primary-hover-color: #d7d2c0;
+    --secondary-text-color: #262730;
+    --highlight-bg-color: #77ba99;
+    --highlight-bg-color-hover: #33ba99;
+    --highlight-text-color: #f9f9f9;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+body{
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
 }
 
 a{
@@ -68,36 +57,90 @@ a{
 }
 
 button{
-    background-color: var(--toggle-btn-bg-color);
-    color: var(--toggle-btn-text-color);
+    background-color: var(--highlight-bg-color);
+    color: var(--highlight-text-color);
     border: none;
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 4px 8px var(--toggle-btn-shadow-color);
+    box-shadow: 0 4px 8px var(--shadow-color);
     transition: background-color 0.3s, box-shadow 0.3s;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
     font-size: 16px;
     margin:15px;
-}
-
-body{
-    background-color: var(--primary-bg-color);
-    color: var(--text-color);
-}
-
-h1,h2,h3,h4{
-    color: var(--secondary-text-color);
+    outline: none;
 }
 
 button:hover {
-    background-color: var(--toggle-btn-hover-bg-color);
-    box-shadow: 0 6px 12px var(--toggle-btn-hover-shadow-color);
+    background-color: var(--highlight-bg-color-hover);
+    box-shadow: 0 6px 12px;
 }
 
 button:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px var(--toggle-btn-hover-bg-color);
+    box-shadow: 0 0 0 4px;
+}
+
+.framed
+{
+    border: solid var(--primary-text-color) 2px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tag
+{
+    border: solid var(--primary-text-color) 2px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.primary
+{
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+}
+
+.secondary
+{
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+}
+
+.highlight
+{
+    background-color: var(--highlight-bg-color);
+    color: var(--highlight-text-color);
+}
+
+.row
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.spaced
+{
+    justify-content: space-around;
+}
+
+.column
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.row-item
+{
+    flex: 1;
+}
+
+.column-item
+{
+    flex: 1;
+}
+
+.bold {
+    font-size: 2.5em;
+    font-weight: bold;
 }
