@@ -7,7 +7,7 @@ from .views.pages import (
     workouts_view, workout_view, exercises_view, calendar_view, gymbuddy_view
 )
 from .views.components import (
-    get_active_workout_item, get_calendar_item, get_workout_detail_item,
+    get_active_workout_item, get_calendar_item,
     get_exercise_detail_item, get_exercise_records_item
 )
 from .views.models import (
@@ -30,7 +30,6 @@ urlpatterns = [
     path('get_calendar_item/<int:year>/<int:month>/<int:day>/', get_calendar_item, name='get_calendar_item'),
     path('get_exercise_detail_item/<int:exercise_id>', get_exercise_detail_item, name='get_exercise_detail_item'),
     path('get_exercise_records_item/<int:exercise_id>/<int:year>/<int:month>/<int:day>/', get_exercise_records_item, name='get_exercise_records_item'),
-    path('get_workout_detail_item/<int:workout_id>', get_workout_detail_item, name='get_workout_detail_item'),
 
     # create models routes
     path('create_exercise/', create_exercise, name='create_exercise'),

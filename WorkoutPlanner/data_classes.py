@@ -40,12 +40,3 @@ class ExerciseRecordsItemData:
     month: int
     day: int
     records: List[dict]  # List of records for the exercise on this date
-
-
-# Data Class for `get_workout_detail_item`
-@dataclass
-class WorkoutDetailItemData:
-    workout_id: int
-    name: str
-    description: str
-    exercises: List[dict]  # List of exercises included in the workout

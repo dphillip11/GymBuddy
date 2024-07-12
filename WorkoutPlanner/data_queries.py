@@ -6,7 +6,6 @@ from .data_classes import (
     CalendarItemData,
     ExerciseDetailItemData,
     ExerciseRecordsItemData,
-    WorkoutDetailItemData
 )
 
 
@@ -111,23 +110,3 @@ def get_exercise_records_item_data(exercise_id, year, month, day):
         records=records
     )
 
-
-def get_workout_detail_item_data(workout_id):
-    """
-    Construct `WorkoutDetailItemData` for the given `workout_id`.
-
-    Args:
-        workout_id (int): The ID of the workout.
-
-    Returns:
-        WorkoutDetailItemData: The data class instance containing details about the workout and its exercises.
-    """
-    workout = Workout.objects.get(id=workout_id)
-    exercises = list(workout.exercises.values('id', 'name', 'description'))
-
-    return WorkoutDetailItemData(
-        workout_id=workout.id,
-        name=workout.name,
-        description=workout.description,
-        exercises=exercises
-    )
