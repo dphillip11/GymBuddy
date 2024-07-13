@@ -19,7 +19,7 @@ This document provides a detailed list of all routes used in the Django project.
 
 ## Architecture
 
-[View the PDF](docs/GymBuddyLayout.pdf)
+[Diagram](docs/GymBuddyLayout.pdf)
 
 The application is designed to manage workout plans, exercises, and records with a focus on dynamic, server-authoritative updates using WebSockets. The architecture is organized into three main components:
 
