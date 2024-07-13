@@ -9,7 +9,7 @@ This document provides a detailed list of all routes used in the Django project.
 
 ## Table of Contents
 
-- [Architecture](#arcjitexture)
+- [Architecture](#architecture)
 - [Page Routes](#page-routes)
 - [Model Creation Routes](#model-creation-routes)
 - [Model Deletion Routes](#model-deletion-routes)
