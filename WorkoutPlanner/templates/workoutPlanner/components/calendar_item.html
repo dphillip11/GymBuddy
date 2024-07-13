@@ -1,16 +1,19 @@
-<div class="framed calendar-item secondary {% if item.is_today %}highlight{% endif %}""
-id="calendar_item_{{item.year}}_{{item.month}}_{{item.day}}">
-    <h3>{{ item.day }}</h3>
-
-    {% if item.is_today and not item.is_completed and item.workout_entries %}
-        <a href="{% url 'gymbuddy' item.workout_entries.0.id %}"
-            <button class="tag secondary">Start Workout</button>
-        </a>
-    {% endif %}
-    {% if item.is_completed %}<p>(Completed)</p>{% endif %}
-    <ul>
-        {% for workout in item.workout_entries %}
-            <li>{{ workout.name }}</li>
-        {% endfor %}
-    </ul>
+<div class="framed flex-item calendar-item primary"
+id="calendar_item_{{item.date.year}}_{{item.date.month}}_{{item.date.day}}">
+    {% for workout_record in item.workout_records %}
+     <div class="flex row" id="workout_record_item_{{workout_record.id}}">
+        <div class="padded_5">{{ workout_record.workout.name }}</div>
+        {% if not workout_record.is_completed %}
+            <form method="post" action="{% url 'delete_workout_record' workout_record.id %}" target="response_iframe">
+                {% csrf_token %}
+                <button class="small-square" type="submit">-</button>
+            </form>
+        {% else %}
+            <div class="centered padded_5" style="color:green"><b>DONE</b></div>
+        {% endif %}
+        {% if item.is_today and not workout_record.is_completed %}
+            <a href="{% url 'gymbuddy' workout_record.workout.id %}"><button class="small-square" type="submit">Start</button></a>
+        {% endif %}
+    </div>
+    {% endfor %}
 </div>

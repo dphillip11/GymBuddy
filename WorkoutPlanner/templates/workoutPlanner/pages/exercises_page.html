@@ -4,8 +4,10 @@
 
 {% block content %}
     <h1>Exercises</h1>
+    <div id="exercise_detail_list">
     {% for item in items %}
-        {% include 'workoutplanner/components/exercise_detail_item.html' with item=item %}
+        {% include 'workoutplanner/components/exercise_detail_item.html' %}
     {% endfor %}
-    {% include 'workoutplanner/forms/generic_form.html' with form=form form_action=form_action %}
+    </div>
+    {% include 'workoutplanner/forms/generic_form.html' %}
 {% endblock %}

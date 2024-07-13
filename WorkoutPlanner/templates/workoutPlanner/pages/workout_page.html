@@ -5,6 +5,6 @@
 {% block content %}
     <h1>{{ workout.name }}</h1>
     {% for item in exercise_items %}
-        {% include 'workoutplanner/components/exercise_detail_item.html' with item=item %}
+        {% include 'workoutplanner/components/exercise_detail_item.html' %}
     {% endfor %}
 {% endblock %}

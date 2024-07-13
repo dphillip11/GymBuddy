@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from typing import Optional, List
 
 
@@ -15,22 +16,11 @@ class ActiveWorkoutItemData:
 # Data Class for `get_calendar_item`
 @dataclass
 class CalendarItemData:
-    year: int
-    month: int
-    day: int
-    workout_entries: List[dict]
+    date : datetime.date
+    workout_records: List[dict]
     is_today: Optional[bool] = None
     is_completed: Optional[bool] = None
-
-
-# Data Class for `get_exercise_detail_item`
-@dataclass
-class ExerciseDetailItemData:
-    exercise_id: int
-    name: str
-    description: str
-    muscle_groups: list  # List of muscle groups affected by the exercise
-
+    
 
 # Data Class for `get_exercise_records_item`
 @dataclass

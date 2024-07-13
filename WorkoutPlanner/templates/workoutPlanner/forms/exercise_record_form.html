@@ -1,4 +1,4 @@
-<div class="ajax-form exercise_record_form row" id="exercise_record_form_{{ exercise_id }}">
+<div class="exercise_record_form" id="exercise_record_form_{{ exercise_id }}">
     <form class="primary" method="post" action="{% url 'create_exercise_record' %}" target="response_iframe">
         {% csrf_token %}
         <div>

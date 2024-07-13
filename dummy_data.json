@@ -1,160 +1,151 @@
 {
-    "muscle_groups": [
-      "Chest",
-      "UpperBack",
-      "LowerBack",
-      "Abs",
-      "Obliques",
-      "Lats",
-      "Quads",
-      "Hamstrings",
-      "Biceps",
-      "Triceps",
-      "Calves",
-      "Delts",
-      "Traps",
-      "Forearms",
-      "Glutes"
-    ],
-    "exercises": [
-      {
-        "name": "Bench Press",
-        "description": "A fundamental chest exercise that targets the pectoral muscles.",
-        "muscle_groups": ["Chest", "Triceps", "Delts"]
-      },
-      {
-        "name": "Dumbbell Curl",
-        "description": "Isolates the biceps for growth and strength.",
-        "muscle_groups": ["Biceps", "Forearms"]
-      },
-      {
-        "name": "Tricep Dips",
-        "description": "A bodyweight exercise for the triceps and chest.",
-        "muscle_groups": ["Chest", "Triceps", "Delts"]
-      },
-      {
-        "name": "Pull-Up",
-        "description": "A bodyweight exercise that works the lats and upper back.",
-        "muscle_groups": ["Lats", "UpperBack", "Biceps"]
-      },
-      {
-        "name": "Squat",
-        "description": "A fundamental lower body exercise that targets the quads and hamstrings.",
-        "muscle_groups": ["Quads", "Hamstrings", "Glutes"]
-      },
-      {
-        "name": "Deadlift",
-        "description": "A full-body lift that primarily targets the lower back, glutes, and hamstrings.",
-        "muscle_groups": ["LowerBack", "Hamstrings", "Glutes"]
-      },
-      {
-        "name": "Overhead Press",
-        "description": "A strength exercise that targets the shoulders and triceps.",
-        "muscle_groups": ["Delts", "Triceps", "UpperBack"]
-      },
-      {
-        "name": "Leg Press",
-        "description": "A machine-based exercise for the quads and glutes.",
-        "muscle_groups": ["Quads", "Glutes", "Hamstrings"]
-      },
-      {
-        "name": "Plank",
-        "description": "A core exercise that strengthens the abdominal muscles and lower back.",
-        "muscle_groups": ["Abs", "Obliques"]
-      },
-      {
-        "name": "Russian Twists",
-        "description": "A rotational core exercise targeting the obliques.",
-        "muscle_groups": ["Obliques", "Abs"]
-      },
-      {
-        "name": "Barbell Row",
-        "description": "A back exercise that targets the lats and upper back.",
-        "muscle_groups": ["Lats", "UpperBack", "Forearms"]
-      },
-      {
-        "name": "Calf Raises",
-        "description": "An exercise to strengthen the calf muscles.",
-        "muscle_groups": ["Calves"]
-      },
-      {
-        "name": "Leg Raises",
-        "description": "An exercise to strengthen the abs and hip flexors.",
-        "muscle_groups": ["Abs"]
-      }
-    ],
-    "workouts": [
-      {
-        "name": "Full Body Workout",
-        "exercises": [
-          {"name": "Bench Press", "order": 1},
-          {"name": "Dumbbell Curl", "order": 2},
-          {"name": "Tricep Dips", "order": 3},
-          {"name": "Pull-Up", "order": 4},
-          {"name": "Squat", "order": 5},
-          {"name": "Deadlift", "order": 6}
-        ]
-      },
-      {
-        "name": "Upper Body Strength",
-        "exercises": [
-          {"name": "Bench Press", "order": 1},
-          {"name": "Overhead Press", "order": 2},
-          {"name": "Pull-Up", "order": 3},
-          {"name": "Barbell Row", "order": 4},
-          {"name": "Dumbbell Curl", "order": 5},
-          {"name": "Tricep Dips", "order": 6}
-        ]
-      },
-      {
-        "name": "Lower Body Power",
-        "exercises": [
-          {"name": "Squat", "order": 1},
-          {"name": "Deadlift", "order": 2},
-          {"name": "Leg Press", "order": 3},
-          {"name": "Calf Raises", "order": 4}
-        ]
-      },
-      {
-        "name": "Core and Abs",
-        "exercises": [
-          {"name": "Plank", "order": 1},
-          {"name": "Russian Twists", "order": 2},
-          {"name": "Leg Raises", "order": 3}
-        ]
-      }
-    ],
-    "users": [
-      {"id": 1},
-      {"id": 2},
-      {"id": 3},
-      {"id": 4}
-    ],
-    "workout_calendar_entries": [
-      {"user": 1, "date": "2024-07-10", "workout_id": 1},
-      {"user": 2, "date": "2024-07-11", "workout_id": 2},
-      {"user": 3, "date": "2024-07-12", "workout_id": 3},
-      {"user": 4, "date": "2024-07-13", "workout_id": 4},
-      {"user": 1, "date": "2024-07-14", "workout_id": 2},
-      {"user": 2, "date": "2024-07-15", "workout_id": 3}
-    ],
-    "exercise_records": [
-      {"user": 1, "exercise_name": "Bench Press", "date": "2024-07-10", "weight": 100.0, "reps": 10},
-      {"user": 1, "exercise_name": "Dumbbell Curl", "date": "2024-07-11", "weight": 25.0, "reps": 12},
-      {"user": 2, "exercise_name": "Pull-Up", "date": "2024-07-11", "weight": 0.0, "reps": 8},
-      {"user": 3, "exercise_name": "Overhead Press", "date": "2024-07-12", "weight": 75.0, "reps": 10},
-      {"user": 4, "exercise_name": "Squat", "date": "2024-07-13", "weight": 150.0, "reps": 5},
-      {"user": 4, "exercise_name": "Deadlift", "date": "2024-07-13", "weight": 180.0, "reps": 4},
-      {"user": 1, "exercise_name": "Tricep Dips", "date": "2024-07-14", "weight": 0.0, "reps": 15},
-      {"user": 2, "exercise_name": "Leg Press", "date": "2024-07-15", "weight": 200.0, "reps": 12}
-    ],
-    "workout_records": [
-      {"user": 1, "workout_id": 1, "date": "2024-07-10"},
-      {"user": 2, "workout_id": 2, "date": "2024-07-11"},
-      {"user": 3, "workout_id": 3, "date": "2024-07-12"},
-      {"user": 4, "workout_id": 4, "date": "2024-07-13"},
-      {"user": 1, "workout_id": 2, "date": "2024-07-14"},
-      {"user": 2, "workout_id": 3, "date": "2024-07-15"}
-    ]
-  }
-  
+  "muscle_groups": [
+    "Chest",
+    "UpperBack",
+    "LowerBack",
+    "Abs",
+    "Obliques",
+    "Lats",
+    "Quads",
+    "Hamstrings",
+    "Biceps",
+    "Triceps",
+    "Calves",
+    "Delts",
+    "Traps",
+    "Forearms",
+    "Glutes"
+  ],
+  "exercises": [
+    {
+      "name": "Bench Press",
+      "description": "A fundamental chest exercise that targets the pectoral muscles.",
+      "muscle_groups": ["Chest", "Triceps", "Delts"]
+    },
+    {
+      "name": "Dumbbell Curl",
+      "description": "Isolates the biceps for growth and strength.",
+      "muscle_groups": ["Biceps", "Forearms"]
+    },
+    {
+      "name": "Tricep Dips",
+      "description": "A bodyweight exercise for the triceps and chest.",
+      "muscle_groups": ["Chest", "Triceps", "Delts"]
+    },
+    {
+      "name": "Pull-Up",
+      "description": "A bodyweight exercise that works the lats and upper back.",
+      "muscle_groups": ["Lats", "UpperBack", "Biceps"]
+    },
+    {
+      "name": "Squat",
+      "description": "A fundamental lower body exercise that targets the quads and hamstrings.",
+      "muscle_groups": ["Quads", "Hamstrings", "Glutes"]
+    },
+    {
+      "name": "Deadlift",
+      "description": "A full-body lift that primarily targets the lower back, glutes, and hamstrings.",
+      "muscle_groups": ["LowerBack", "Hamstrings", "Glutes"]
+    },
+    {
+      "name": "Overhead Press",
+      "description": "A strength exercise that targets the shoulders and triceps.",
+      "muscle_groups": ["Delts", "Triceps", "UpperBack"]
+    },
+    {
+      "name": "Leg Press",
+      "description": "A machine-based exercise for the quads and glutes.",
+      "muscle_groups": ["Quads", "Glutes", "Hamstrings"]
+    },
+    {
+      "name": "Plank",
+      "description": "A core exercise that strengthens the abdominal muscles and lower back.",
+      "muscle_groups": ["Abs", "Obliques"]
+    },
+    {
+      "name": "Russian Twists",
+      "description": "A rotational core exercise targeting the obliques.",
+      "muscle_groups": ["Obliques", "Abs"]
+    },
+    {
+      "name": "Barbell Row",
+      "description": "A back exercise that targets the lats and upper back.",
+      "muscle_groups": ["Lats", "UpperBack", "Forearms"]
+    },
+    {
+      "name": "Calf Raises",
+      "description": "An exercise to strengthen the calf muscles.",
+      "muscle_groups": ["Calves"]
+    },
+    {
+      "name": "Leg Raises",
+      "description": "An exercise to strengthen the abs and hip flexors.",
+      "muscle_groups": ["Abs"]
+    }
+  ],
+  "workouts": [
+    {
+      "name": "Full Body Workout",
+      "exercises": [
+        {"name": "Bench Press", "order": 1},
+        {"name": "Dumbbell Curl", "order": 2},
+        {"name": "Tricep Dips", "order": 3},
+        {"name": "Pull-Up", "order": 4},
+        {"name": "Squat", "order": 5},
+        {"name": "Deadlift", "order": 6}
+      ]
+    },
+    {
+      "name": "Upper Body Strength",
+      "exercises": [
+        {"name": "Bench Press", "order": 1},
+        {"name": "Overhead Press", "order": 2},
+        {"name": "Pull-Up", "order": 3},
+        {"name": "Barbell Row", "order": 4},
+        {"name": "Dumbbell Curl", "order": 5},
+        {"name": "Tricep Dips", "order": 6}
+      ]
+    },
+    {
+      "name": "Lower Body Power",
+      "exercises": [
+        {"name": "Squat", "order": 1},
+        {"name": "Deadlift", "order": 2},
+        {"name": "Leg Press", "order": 3},
+        {"name": "Calf Raises", "order": 4}
+      ]
+    },
+    {
+      "name": "Core and Abs",
+      "exercises": [
+        {"name": "Plank", "order": 1},
+        {"name": "Russian Twists", "order": 2},
+        {"name": "Leg Raises", "order": 3}
+      ]
+    }
+  ],
+  "users": [
+    {"id": 1},
+    {"id": 2},
+    {"id": 3},
+    {"id": 4}
+  ],
+  "exercise_records": [
+    {"user": 1, "exercise_name": "Bench Press", "date": "2024-07-10", "weight": 100.0, "reps": 10},
+    {"user": 1, "exercise_name": "Dumbbell Curl", "date": "2024-07-11", "weight": 25.0, "reps": 12},
+    {"user": 2, "exercise_name": "Pull-Up", "date": "2024-07-11", "weight": 0.0, "reps": 8},
+    {"user": 3, "exercise_name": "Overhead Press", "date": "2024-07-12", "weight": 75.0, "reps": 10},
+    {"user": 4, "exercise_name": "Squat", "date": "2024-07-13", "weight": 150.0, "reps": 5},
+    {"user": 4, "exercise_name": "Deadlift", "date": "2024-07-13", "weight": 180.0, "reps": 4},
+    {"user": 1, "exercise_name": "Tricep Dips", "date": "2024-07-14", "weight": 0.0, "reps": 15},
+    {"user": 2, "exercise_name": "Leg Press", "date": "2024-07-15", "weight": 200.0, "reps": 12}
+  ],
+  "workout_records": [
+    {"user": 1, "workout_id": 1, "date": "2024-07-10"},
+    {"user": 2, "workout_id": 2, "date": "2024-07-11"},
+    {"user": 3, "workout_id": 3, "date": "2024-07-12"},
+    {"user": 4, "workout_id": 4, "date": "2024-07-13"},
+    {"user": 1, "workout_id": 2, "date": "2024-07-14"},
+    {"user": 2, "workout_id": 3, "date": "2024-07-15"}
+  ]
+}

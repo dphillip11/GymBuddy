@@ -9,6 +9,7 @@ from ..forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecord
 from ..models import Exercise, User, Workout, WorkoutRecord
 
 
+# Create routes
 @require_POST
 def create_exercise(request):
     """
@@ -16,7 +17,11 @@ def create_exercise(request):
     """
     form = ExerciseForm(request.POST)
     if form.is_valid():
-        form.save()
+        new_exercise = form.save()
+
+        # apepnd to item list
+        components.append_exercise_detail_item(new_exercise.id)
+
         return HttpResponse("Exercise created successfully")
     return HttpResponseBadRequest("Invalid form data")
 
@@ -38,7 +43,10 @@ def create_exercise_record(request):
         exercise_record.date = date
         exercise_record.user = user
         exercise_record.save()
+
+        # update item
         components.update_exercise_records_item(exercise_id, date.year, date.month, date.day)
+
         return HttpResponse("Exercise record created successfully")
     return HttpResponseBadRequest("Invalid form data")
 
@@ -62,11 +70,18 @@ def create_workout_record(request):
     """
     form = WorkoutRecordForm(request.POST)
     if form.is_valid():
-        form.save()
+        workout_record = form.save(commit=False)
+        workout_record.user = request.user
+        workout_record.save()
+
+        # update item
+        components.update_calendar_item(workout_record.date)
+        
         return HttpResponse("Workout record created successfully")
     return HttpResponseBadRequest("Invalid form data")
 
 
+# update routes
 @require_POST
 def update_exercise(request, exercise_id):
     """
@@ -133,4 +148,7 @@ def delete_workout_record(request, workout_record_id):
     """
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
     workout_record.delete()
+    
+    components.delete_workout_record_item(workout_record_id)
+    
     return HttpResponse("Workout record deleted successfully")

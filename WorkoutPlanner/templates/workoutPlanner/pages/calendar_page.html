@@ -11,7 +11,11 @@
     </div>
     <div id="calendar-grid">
     {% for item in calendar_items %}
-        {% include 'workoutplanner/components/calendar_item.html' with item=item %}
+        <div class="framed column {% if item.is_today %}highlight{% else %}secondary{% endif %} centered flex flex-item">
+            <h3>{{ item.date.day }}</h3>
+            {% include 'workoutplanner/components/calendar_item.html' %}
+            {% include 'workoutplanner/forms/workout_record_form.html' %}
+        </div>
     {% endfor %}
     </div>
 {% endblock %}

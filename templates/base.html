@@ -12,7 +12,12 @@
 
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'workoutPlanner/css/styles.css' %}">
-
+    <script>
+        const csrfTokenPattern = /<input type="hidden" name="csrfmiddlewaretoken" value="([^"]+)">/;
+        const match = csrfTokenPattern.exec('{% csrf_token %}');
+        window.csrfToken = match[1];
+        console.log(window.csrfToken);
+    </script>
     <script src="{% static 'js/theme.js' %}" defer></script>
     <script src="{% static 'js/update_items.js' %}" defer></script>
 

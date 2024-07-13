@@ -14,13 +14,38 @@ document.addEventListener("DOMContentLoaded", function() {
             const htmlContent = data.new_content;
             const append = data.append;
 
+            // Create a new element from the HTML content
+            const newElement = document.createElement('div');
+            newElement.innerHTML = htmlContent;
+
+            const forms = newElement.querySelectorAll('form');
+            forms.forEach(form => {
+                let csrfInput = form.querySelector('input[name="csrfmiddlewaretoken"]');
+                if (csrfInput) {
+                    csrfInput.value = window.csrfToken;
+                    console.log("CSRF token updated in form");
+                } else {
+                    // If there's no csrfmiddlewaretoken input, create one
+                    const newCsrfInput = document.createElement('input');
+                    newCsrfInput.type = 'hidden';
+                    newCsrfInput.name = 'csrfmiddlewaretoken';
+                    newCsrfInput.value = window.csrfToken;
+                    form.appendChild(newCsrfInput);
+                    console.log("CSRF token added to form");
+                }
+            });
+
+            const newContent = newElement.firstChild;
+
             // Find the element with the given ID and update its innerHTML
             const targetElement = document.querySelector(`#${elementId}`);
             if (targetElement) {
                 if (append )
                     targetElement.insertAdjacentHTML('beforeend', htmlContent);
                 else
-                    targetElement.innerHTML = htmlContent;
+                {
+                    targetElement.replaceWith(newContent);
+                }
 
                 console.log(`Updated ${elementId} with new content.`);
             } else {

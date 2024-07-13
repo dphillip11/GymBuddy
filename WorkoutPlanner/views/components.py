@@ -29,10 +29,16 @@ def send_update_to_websocket(element_id, new_content, append=False):
 
 
 # Generic update function
-def update_item(template_name, context_data, element_id):
-    context = context_data
+def update_item(template_name, context, element_id, append=False):
     new_content = render_to_string(template_name, context)
-    send_update_to_websocket(element_id, new_content)
+    send_update_to_websocket(element_id, new_content, append)
+
+
+# add an exericse to the exercise list
+def append_exercise_detail_item(exercise_id):
+    context_data = {'item': get_exercise_detail_item_data(exercise_id)}
+    element_id = f'exercise_detail_list'
+    update_item('workoutplanner/components/exercise_detail_item.html', context_data, element_id, append=True)
 
 
 # Specific update functions using the generic update function
@@ -42,19 +48,23 @@ def update_active_workout_item(exercise_id):
     update_item('workoutplanner/components/active_workout_item.html', context_data, element_id)
 
 
-def update_calendar_item(year, month, day):
-    context_data = {'item': get_calendar_item_data(year, month, day)}
-    element_id = f'calendar_item_{year}_{month}_{day}'
-    update_item('workoutplanner/components/calendar_item.html', context_data, element_id)
+def update_calendar_item(date):
+    context = { 'item': get_calendar_item_data(date) }
+    element_id = f'calendar_item_{date.year}_{date.month}_{date.day}'
+    update_item('workoutplanner/components/calendar_item.html', context, element_id)
 
 
 def update_exercise_detail_item(exercise_id):
-    context_data = {'item': get_exercise_detail_item_data(exercise_id)}
+    context = {'item': get_exercise_detail_item_data(exercise_id)}
     element_id = f'exercise_detail_item_{exercise_id}'
-    update_item('workoutplanner/components/exercise_detail_item.html', context_data, element_id)
+    update_item('workoutplanner/components/exercise_detail_item.html', context, element_id)
 
 
 def update_exercise_records_item(exercise_id, year, month, day):
-    context_data = {'item': get_exercise_records_item_data(exercise_id, year, month, day)}
+    context = {'item': get_exercise_records_item_data(exercise_id, year, month, day)}
     element_id = f'exercise_records_item_{exercise_id}_{year}_{month}_{day}'
-    update_item('workoutplanner/components/exercise_records_item.html', context_data, element_id)
+    update_item('workoutplanner/components/exercise_records_item.html', context, element_id)
+
+def delete_workout_record_item(workout_record_id):
+    element_id = f'workout_record_item_{workout_record_id}'
+    send_update_to_websocket(element_id," ");

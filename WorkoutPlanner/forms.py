@@ -55,9 +55,12 @@ class WorkoutForm(forms.ModelForm):
 
 
 class WorkoutRecordForm(forms.ModelForm):
-    """
-    A form for adding or updating workout records.
-    """
+    workout = forms.ModelChoiceField(queryset=Workout.objects.all(), empty_label="Add a workout")
+
     class Meta:
         model = WorkoutRecord
-        fields = ['workout', 'date', 'isCompleted']
+        fields = ['workout', 'date', 'is_completed']
+        widgets = {
+            'date': forms.HiddenInput(),
+            'is_completed': forms.HiddenInput(),
+        }

@@ -1,7 +1,10 @@
 import json
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
-from WorkoutPlanner.models import MuscleGroup, MuscleGroupTag, Exercise, Workout, WorkoutExercise, User, WorkoutCalendarEntry, ExerciseRecord, WorkoutRecord
+from WorkoutPlanner.models import MuscleGroup, Exercise, Workout, ExerciseRecord, WorkoutRecord
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Command(BaseCommand):
     """
@@ -14,6 +17,18 @@ class Command(BaseCommand):
         """
         Load dummy data from 'dummy_data.json' and populate the database.
         """
+
+        # Clear the database
+        self.stdout.write(self.style.WARNING('Clearing the database...'))
+        WorkoutRecord.objects.all().delete()
+        ExerciseRecord.objects.all().delete()
+        Workout.objects.all().delete()
+        Exercise.objects.all().delete()
+        MuscleGroup.objects.all().delete()
+        User.objects.exclude(is_superuser=True).delete()  # Optionally keep superuser
+
+        self.stdout.write(self.style.SUCCESS('Database cleared.'))
+
         # Open the JSON file
         with open('dummy_data.json') as f:
             data = json.load(f)
@@ -31,10 +46,9 @@ class Command(BaseCommand):
                 name=exercise_data['name'],
                 defaults={'description': exercise_data['description']}
             )
-            for muscle_group_name in exercise_data['muscle_groups']:
-                MuscleGroupTag.objects.get_or_create(
-                    exercise=exercise,
-                    muscle_group=muscle_group_dict[muscle_group_name]
+            if 'muscle_groups' in exercise_data:
+                exercise.muscle_groups.set(
+                    [muscle_group_dict[group_name] for group_name in exercise_data['muscle_groups']]
                 )
             exercise_dict[exercise_data['name']] = exercise
 
@@ -43,43 +57,48 @@ class Command(BaseCommand):
             workout, created = Workout.objects.get_or_create(name=workout_data['name'])
             for exercise_info in workout_data['exercises']:
                 exercise = exercise_dict[exercise_info['name']]
-                WorkoutExercise.objects.create(
-                    workout=workout,
-                    exercise=exercise,
-                    order=exercise_info['order']
-                )
 
         # Populate users
         user_dict = {}
         for user_data in data['users']:
-            user, created = User.objects.get_or_create(id=user_data['id'])
-            user.save()
-            user_dict[user_data['id']] = user
-
-        # Populate workout calendar entries
-        for entry_data in data['workout_calendar_entries']:
-            WorkoutCalendarEntry.objects.create(
-                user=user_dict[entry_data['user']],
-                date=parse_date(entry_data['date']),
-                workout_id=entry_data['workout_id']
+            user, created = User.objects.get_or_create(
+                id=user_data['id'],
+                defaults={
+                    'username': f'user{user_data["id"]}',  # Example username, change as needed
+                    'email': f'user{user_data["id"]}@example.com',  # Example email, change as needed
+                    'password': 'password'  # Example password, change as needed
+                }
             )
+            user_dict[user_data['id']] = user
 
         # Populate exercise records
         for record_data in data['exercise_records']:
-            ExerciseRecord.objects.create(
-                user=user_dict[record_data['user']],
-                exercise=exercise_dict[record_data['exercise_name']],
-                date=parse_date(record_data['date']),
-                weight=record_data['weight'],
-                reps=record_data['reps']
-            )
+            exercise = exercise_dict.get(record_data['exercise_name'])
+            if exercise:
+                ExerciseRecord.objects.create(
+                    user=user_dict[record_data['user']],
+                    exercise=exercise,
+                    date=parse_date(record_data['date']),
+                    weight=record_data['weight'],
+                    reps=record_data['reps']
+                )
+            else:
+                self.stdout.write(self.style.ERROR(f"Exercise '{record_data['exercise_name']}' not found for ExerciseRecord"))
 
-        # Populate workout records
+        # Populate workout records and mark as completed if the date is before today
+        today = parse_date('2024-07-14')  # Use a fixed date for testing or replace with datetime.date.today() for the current date
         for record_data in data['workout_records']:
-            WorkoutRecord.objects.create(
-                user=user_dict[record_data['user']],
-                workout_id=record_data['workout_id'],
-                date=parse_date(record_data['date'])
-            )
+            workout = Workout.objects.filter(id=record_data['workout_id']).first()
+            user = user_dict.get(record_data['user'])
+            if workout and user:
+                is_completed = parse_date(record_data['date']) < today
+                WorkoutRecord.objects.create(
+                    user=user,
+                    workout=workout,
+                    date=parse_date(record_data['date']),
+                    is_completed=is_completed
+                )
+            else:
+                self.stdout.write(self.style.ERROR(f"Workout with ID '{record_data['workout_id']}' or User with ID '{record_data['user']}' not found for WorkoutRecord"))
 
         self.stdout.write(self.style.SUCCESS('Successfully populated the database with dummy data'))

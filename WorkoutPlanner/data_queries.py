@@ -1,11 +1,10 @@
 import datetime
 
 # project
-from .models import Exercise, ExerciseRecord, MuscleGroupTag, Workout, WorkoutRecord
+from .models import Exercise, ExerciseRecord, Workout, WorkoutRecord
 from .data_classes import (
     ActiveWorkoutItemData,
     CalendarItemData,
-    ExerciseDetailItemData,
     ExerciseRecordsItemData,
 )
 
@@ -40,7 +39,7 @@ def get_active_workout_item_data(exercise_id):
     )
 
 
-def get_calendar_item_data(year, month, day):
+def get_calendar_item_data(date):
     """
     Construct `CalendarItemData` for the given date.
 
@@ -53,44 +52,26 @@ def get_calendar_item_data(year, month, day):
         CalendarItemData: The data class instance containing the workout entries for the given date.
     """
     workout_records = WorkoutRecord.objects.filter(
-        date__year=year, date__month=month, date__day=day
+        date=date
     ).select_related('workout')   
 
-    workout_entries = [workout_record.workout for workout_record in workout_records]
+    workout_records = [workout_record for workout_record in workout_records]
 
-    is_today = (year, month, day) == (datetime.date.today().year, datetime.date.today().month, datetime.date.today().day)
-    is_completed = WorkoutRecord.objects.filter(date__year=year, date__month=month, date__day=day, isCompleted=True).exists()
+    is_today = date == datetime.date.today()
 
     return CalendarItemData(
-        year=year,
-        month=month,
-        day=day,
-        workout_entries=workout_entries,
-        is_today=is_today,
-        is_completed=is_completed
+        date=date,
+        workout_records=workout_records,
+        is_today=is_today
     )
 
 
 def get_exercise_detail_item_data(exercise_id):
     """
-    Construct `ExerciseDetailItemData` for the given `exercise_id`.
-
-    Args:
-        exercise_id (int): The ID of the exercise.
-
-    Returns:
-        ExerciseDetailItemData: The data class instance containing details about the exercise.
+    An indirection between the database query and the view
     """
     try:
-        exercise = Exercise.objects.get(id=exercise_id)
-        muscle_groups = MuscleGroupTag.objects.filter(exercise=exercise).select_related('muscle_group').values_list('muscle_group__name', flat=True)
-
-        return ExerciseDetailItemData(
-            exercise_id=exercise.id,
-            name=exercise.name,
-            description=exercise.description,
-            muscle_groups=list(muscle_groups)
-        )
+        return Exercise.objects.get(id=exercise_id)
     except:
         return None
     

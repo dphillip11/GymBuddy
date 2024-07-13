@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse
@@ -5,7 +6,7 @@ import calendar
 
 # project
 from WorkoutPlanner.data_queries import get_active_workout_item_data, get_calendar_item_data, get_exercise_detail_item_data
-from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm
+from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
 from WorkoutPlanner.models import Exercise, Workout
 
 def calendar_view(request, year=None, month=None):
@@ -20,7 +21,7 @@ def calendar_view(request, year=None, month=None):
 
     num_days = calendar.monthrange(year, month)[1]
     calendar_items = [
-        get_calendar_item_data(year, month, day)
+        get_calendar_item_data(datetime.date(year, month, day))
         for day in range(1, num_days + 1)
     ]
 
@@ -41,6 +42,7 @@ def calendar_view(request, year=None, month=None):
         'year': year,
         'month': month,
         'calendar_items': calendar_items,
+        'form': WorkoutRecordForm(),
         'next_month_url': reverse('calendar_with_params', kwargs={'year': next_year, 'month': next_month}),
         'prev_month_url': reverse('calendar_with_params', kwargs={'year': prev_year, 'month': prev_month}),
     }

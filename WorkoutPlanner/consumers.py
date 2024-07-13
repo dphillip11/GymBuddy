@@ -27,9 +27,11 @@ class UpdateItemsConsumer(AsyncWebsocketConsumer):
     async def update_message(self, event):
         element_id = event['element_id']
         new_content = event['new_content']
+        append = event['append']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'element_id': element_id,
-            'new_content': new_content
+            'new_content': new_content,
+            'append': append
         }))
