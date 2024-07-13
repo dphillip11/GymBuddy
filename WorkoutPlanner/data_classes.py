@@ -8,8 +8,8 @@ class ActiveWorkoutItemData:
     exercise_id: int
     name: str
     description: str
-    previous_records: Optional[list] = None
-    todays_records: Optional[list] = None
+    previous_record_item: Optional[dict] = None
+    todays_record_item: Optional[dict] = None
 
 
 # Data Class for `get_calendar_item`

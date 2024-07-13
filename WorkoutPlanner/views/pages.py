@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse
-
 import calendar
-# project
-from WorkoutPlanner.data_queries import get_calendar_item_data, get_exercise_detail_item_data
-from WorkoutPlanner.forms import ExerciseForm, WorkoutForm
-from WorkoutPlanner.models import Exercise, Workout
 
+# project
+from WorkoutPlanner.data_queries import get_active_workout_item_data, get_calendar_item_data, get_exercise_detail_item_data
+from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm
+from WorkoutPlanner.models import Exercise, Workout
 
 def calendar_view(request, year=None, month=None):
     """
@@ -61,18 +60,40 @@ def exercises_view(request):
     context = {
         'items':items,
         'form': ExerciseForm(),
-        'form_name':"Create Exercise"
+        'form_name':"Create Exercise",
+        'form_action':reverse('create_exercise')
     }
 
     return render(request, 'workoutplanner/pages/exercises_page.html', context )
 
 
-def gymbuddy_view(request):
+def gymbuddy_view(request, workout_id):
     """
-    Display the gymbuddy page and do a workout.
+    Display the gymbuddy page and perform a workout.
+    
+    Args:
+        request (HttpRequest): The request object.
+        workout_id (int): The ID of the workout to display.
+    
+    Returns:
+        HttpResponse: The rendered gymbuddy page with workout details.
     """
-    return render(request, 'workoutplanner/pages/gymbuddy_page.html')
+    workout = get_object_or_404(Workout, id=workout_id)
 
+    items = [
+        get_active_workout_item_data(exercise.id)
+        for exercise in workout.exercises.all()
+    ]
+
+    context = {
+        'workout': workout,
+        'active_workout_items': items,
+        'form':ExerciseRecordForm(),
+        'form_name':"Log Exercise",
+        'form_action':reverse('create_exercise_record')
+    }
+
+    return render(request, 'workoutplanner/pages/gymbuddy_page.html', context )
 
 def workout_view(request, workout_id):
     """
@@ -101,6 +122,7 @@ def workouts_view(request):
     context = {
         'workouts':Workout.objects.all(),
         'form': WorkoutForm(),
-        'form_name':"Create Workout"
+        'form_name':"Create Workout",
+        'form_action':reverse('create_workout')
     }
     return render(request, 'workoutplanner/pages/workouts_page.html', context )

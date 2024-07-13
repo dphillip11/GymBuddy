@@ -8,17 +8,16 @@ class ExerciseForm(forms.ModelForm):
     """
     muscle_groups = forms.ModelMultipleChoiceField(
         queryset=MuscleGroup.objects.all(),
-        widget=forms.CheckboxSelectMultiple,  # Use checkboxes for selecting multiple muscle groups
-        required=False,  # This makes the field optional
-        help_text='Select the muscle groups targeted by this exercise.'
+        widget=forms.CheckboxSelectMultiple,
+        required=False, 
     )
 
     class Meta:
         model = Exercise
-        fields = ['name', 'description', 'muscle_groups']  # Include muscle_groups in the form fields
+        fields = ['name', 'description', 'muscle_groups']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Enter exercise name'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Enter exercise description', 'rows': 4}),
+            'description': forms.Textarea(attrs={'placeholder': 'Enter exercise description', 'rows': 2}),
         }
         labels = {
             'name': 'Exercise Name',
@@ -33,7 +32,11 @@ class ExerciseRecordForm(forms.ModelForm):
     """
     class Meta:
         model = ExerciseRecord
-        fields = ['exercise', 'reps', 'weight', 'date']
+        fields = ['reps', 'weight']
+    
+    def __init__(self, *args, **kwargs):
+        self.exercise_id = kwargs.pop('exercise_id', None)
+        super().__init__(*args, **kwargs)
 
 
 class WorkoutForm(forms.ModelForm):

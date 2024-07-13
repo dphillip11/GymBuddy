@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 # project
+from WorkoutPlanner.views import components
 from ..forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
-from ..models import Exercise, Workout, WorkoutRecord
+from ..models import Exercise, User, Workout, WorkoutRecord
+
 
 @require_POST
 def create_exercise(request):
@@ -23,9 +26,19 @@ def create_exercise_record(request):
     """
     Create a new exercise record.
     """
-    form = ExerciseRecordForm(request.POST)
+    exercise_id = request.POST.get('exercise_id')
+    exercise = get_object_or_404(Exercise, id=exercise_id)
+    user = get_object_or_404(User, id=request.user.id)
+    date = timezone.now().date()
+
+    form = ExerciseRecordForm(request.POST, exercise_id=exercise_id)
     if form.is_valid():
-        form.save()
+        exercise_record = form.save(commit=False)
+        exercise_record.exercise = exercise
+        exercise_record.date = date
+        exercise_record.user = user
+        exercise_record.save()
+        components.update_exercise_records_item(exercise_id, date.year, date.month, date.day)
         return HttpResponse("Exercise record created successfully")
     return HttpResponseBadRequest("Invalid form data")
 

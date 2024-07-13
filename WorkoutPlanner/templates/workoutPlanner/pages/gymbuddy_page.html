@@ -4,4 +4,7 @@
 
 {% block content %}
     <h1>Gym Buddy</h1>
+    {% for item in active_workout_items %}
+        {% include 'workoutplanner/components/active_workout_item.html' with item=item form=form form_name=form_name %}
+    {% endfor %}
 {% endblock %}

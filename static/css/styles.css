@@ -3,7 +3,7 @@
     --primary-hover-color: #c1c3ce;
     --primary-text-color: #000000;
     --secondary-bg-color: #acbed8;
-    --primary-hover-color: #8898ae;
+    --secondary-hover-color: #8898ae;
     --secondary-text-color: #ffffff;
     --highlight-bg-color: #f2d398;
     --highlight-bg-color-hover: #c7ac7b;
@@ -16,7 +16,7 @@
     --primary-hover-color: #335e81;
     --primary-text-color: #ffffff;
     --secondary-bg-color: #004346;
-    --primary-hover-color: #007278;
+    --secondary-hover-color: #007278;
     --secondary-text-color: #f1f4f7;
     --highlight-bg-color: #74b3ce;
     --highlight-bg-color-hover: #87d0ef;
@@ -29,12 +29,23 @@
     --primary-hover-color: #e6f0d1;
     --primary-text-color: #262730;
     --secondary-bg-color: #d7c0d0;
-    --primary-hover-color: #d7d2c0;
+    --secondary-hover-color: #d7d2c0;
     --secondary-text-color: #262730;
     --highlight-bg-color: #77ba99;
     --highlight-bg-color-hover: #33ba99;
     --highlight-text-color: #f9f9f9;
     --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* only used for debugging */
+#response_iframe{
+    /* display:hidden; */
+    border: none;
+    width:100vw;
+    height:30px;
+    position: sticky;
+    top:0;
+    z-index: 10001;
 }
 
 body{
@@ -79,20 +90,57 @@ button:focus {
     box-shadow: 0 0 0 4px;
 }
 
-.framed
+.framed, form
 {
     border: solid var(--primary-text-color) 2px;
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
-.tag
+.padded_5{
+    padding: 5px;
+}
+
+.padded_lr_10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.rounded{
+    border-radius: 5px;
+}
+
+.centered{
+    text-align: center;
+}
+
+.no-margin{
+    margin: 0px;
+}
+
+.tag, div label
 {
     border: solid var(--primary-text-color) 2px;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
+}
+
+div label:hover
+{
+    background-color: var(--highlight-bg-color-hover);
+}
+
+div label
+{
+    background-color: var(--highlight-bg-color);
+}
+
+form div
+{
+    display:flex;
+    flex-wrap: wrap;
 }
 
 .primary
@@ -117,6 +165,12 @@ button:focus {
 {
     display: flex;
     flex-direction: row;
+}
+
+.flex
+{
+    display: flex;
+    width: auto;
 }
 
 .spaced

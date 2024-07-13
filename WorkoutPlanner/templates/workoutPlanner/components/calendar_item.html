@@ -1,7 +1,12 @@
 <div class="framed calendar-item secondary {% if item.is_today %}highlight{% endif %}""
 id="calendar_item_{{item.year}}_{{item.month}}_{{item.day}}">
     <h3>{{ item.day }}</h3>
-    {% if item.is_today %}<p>(Today)</p>{% endif %}
+
+    {% if item.is_today and not item.is_completed and item.workout_entries %}
+        <a href="{% url 'gymbuddy' item.workout_entries.0.id %}"
+            <button class="tag secondary">Start Workout</button>
+        </a>
+    {% endif %}
     {% if item.is_completed %}<p>(Completed)</p>{% endif %}
     <ul>
         {% for workout in item.workout_entries %}

@@ -30,12 +30,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "channels",
     "WorkoutPlanner"
 ]
 
@@ -68,7 +70,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "GymBuddy.wsgi.application"
+ASGI_APPLICATION = 'GymBuddy.asgi.application'
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

@@ -1,16 +1,13 @@
 from django.urls import path
 
 from WorkoutPlanner import views
+from WorkoutPlanner.constants import *
 
-# project
 from .views.pages import (
     workouts_view, workout_view, exercises_view, calendar_view, gymbuddy_view
 )
-from .views.components import (
-    get_active_workout_item, get_calendar_item,
-    get_exercise_detail_item, get_exercise_records_item
-)
-from .views.models import (
+
+from .views.forms import (
     create_exercise, create_exercise_record, create_workout, create_workout_record,
     update_exercise, update_workout, update_workout_record,
     delete_exercise, delete_workout, delete_workout_record
@@ -18,32 +15,27 @@ from .views.models import (
 
 urlpatterns = [
     # page routes
-    path('', workouts_view, name='index'),
-    path('calendar/', calendar_view, name='calendar'),
-    path('calendar/<int:year>/<int:month>/', calendar_view, name='calendar_with_params'),    path('exercises/', exercises_view, name='exercises'),
-    path('gymbuddy/', gymbuddy_view, name='gymbuddy'),
-    path('workout/<int:workout_id>/', workout_view, name='workout'),
-    path('workouts/', workouts_view, name='workouts'),
-
-    # component routes
-    path('get_active_workout_item/<int:exercise_id>', get_active_workout_item, name='get_active_workout_item'),
-    path('get_calendar_item/<int:year>/<int:month>/<int:day>/', get_calendar_item, name='get_calendar_item'),
-    path('get_exercise_detail_item/<int:exercise_id>', get_exercise_detail_item, name='get_exercise_detail_item'),
-    path('get_exercise_records_item/<int:exercise_id>/<int:year>/<int:month>/<int:day>/', get_exercise_records_item, name='get_exercise_records_item'),
+    path(INDEX_URL, workouts_view, name=INDEX_NAME),
+    path(CALENDAR_URL, calendar_view, name=CALENDAR_NAME),
+    path(CALENDAR_WITH_PARAMS_URL, calendar_view, name=CALENDAR_WITH_PARAMS_NAME),
+    path(EXERCISES_URL, exercises_view, name=EXERCISES_NAME),
+    path(GYMBUDDY_URL, gymbuddy_view, name=GYMBUDDY_NAME),
+    path(WORKOUT_URL, workout_view, name=WORKOUT_NAME),
+    path(WORKOUTS_URL, workouts_view, name=WORKOUTS_NAME),
 
     # create models routes
-    path('create_exercise/', create_exercise, name='create_exercise'),
-    path('create_exercise_record/', create_exercise_record, name='create_exercise_record'),
-    path('create_workout/', create_workout, name='create_workout'),
-    path('create_workout_record/', create_workout_record, name='create_workout_record'),
+    path(CREATE_EXERCISE_URL, create_exercise, name=CREATE_EXERCISE_NAME),
+    path(CREATE_EXERCISE_RECORD_URL, create_exercise_record, name=CREATE_EXERCISE_RECORD_NAME),
+    path(CREATE_WORKOUT_URL, create_workout, name=CREATE_WORKOUT_NAME),
+    path(CREATE_WORKOUT_RECORD_URL, create_workout_record, name=CREATE_WORKOUT_RECORD_NAME),
 
     # delete models routes
-    path('delete_exercise/<int:exercise_id>/', delete_exercise, name='delete_exercise'),
-    path('delete_workout/<int:workout_id>/', delete_workout, name='delete_workout'),
-    path('delete_workout_record/<int:workout_record_id>/', delete_workout_record, name='delete_workout_record'),
+    path(DELETE_EXERCISE_URL, delete_exercise, name=DELETE_EXERCISE_NAME),
+    path(DELETE_WORKOUT_URL, delete_workout, name=DELETE_WORKOUT_NAME),
+    path(DELETE_WORKOUT_RECORD_URL, delete_workout_record, name=DELETE_WORKOUT_RECORD_NAME),
 
     # update models routes
-    path('update_exercise/<int:exercise_id>/', update_exercise, name='update_exercise'),
-    path('update_workout/<int:workout_id>/', update_workout, name='update_workout'),
-    path('update_workout_record/<int:workout_record_id>/', update_workout_record, name='update_workout_record'),
+    path(UPDATE_EXERCISE_URL, update_exercise, name=UPDATE_EXERCISE_NAME),
+    path(UPDATE_WORKOUT_URL, update_workout, name=UPDATE_WORKOUT_NAME),
+    path(UPDATE_WORKOUT_RECORD_URL, update_workout_record, name=UPDATE_WORKOUT_RECORD_NAME),
 ]
