@@ -1,7 +1,7 @@
 # GymBuddy
 A basic demonstration of a project using Django to help you at the gym
 
-[Gym Buddy Documentation](https://dphillip11.github.io/GymBuddy/)
+Use the initial_setup.sh file to get started.
 
 # Django Project Route Documentation
 
@@ -99,3 +99,5 @@ These routes are used for updating existing records in the database.
 | `update_workout_record/<int:workout_record_id>/` | `update_workout_record`  | `update_workout_record`   | Update a workout record by ID    |
 
 ---
+=======
+
