@@ -1,0 +1,35 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <script>
+            const ws = new WebSocket('ws://127.0.0.1:8000/ws/updates/')
+
+            ws.onopen = function() {
+                console.log('WebSocket connection opened.');
+            };
+
+            ws.onmessage = function(event) {
+                console.log('Message received:', event.data);
+                const data = JSON.parse(event.data);
+                const elementId = data.element_id;
+                const newContent = data.new_content;
+
+                // Update the element on the page
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.innerHTML = newContent;
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed.');
+                console.error('WebSocket closed unexpectedly.');
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        </script>
+    </body>
+</html>

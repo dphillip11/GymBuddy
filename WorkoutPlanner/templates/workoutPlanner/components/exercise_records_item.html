@@ -1,0 +1,24 @@
+<div id="exercise_records_item_{{item.exercise_id}}_{{item.year}}_{{item.month}}_{{item.day}}">
+    {% if item.records %}
+    <table>
+        <thead>
+            <tr class="highlight">
+                <th class="padded_5 padded_lr_10 rounded">Weight(kg)</th>
+                <th class="padded_5 padded_lr_10 rounded">Reps</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in item.records %}
+            <tr>
+                <td class="secondary padded_5 rounded">{{ record.weight }}</td>
+                <td class="secondary padded_5 rounded">{{ record.reps }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No records available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>

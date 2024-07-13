@@ -1,5 +1,6 @@
 from django import forms
-from .models import Exercise, MuscleGroup
+from .models import Exercise, ExerciseRecord, MuscleGroup, Workout, WorkoutRecord
+
 
 class ExerciseForm(forms.ModelForm):
     """
@@ -7,20 +8,56 @@ class ExerciseForm(forms.ModelForm):
     """
     muscle_groups = forms.ModelMultipleChoiceField(
         queryset=MuscleGroup.objects.all(),
-        widget=forms.CheckboxSelectMultiple,  # Use checkboxes for selecting multiple muscle groups
-        required=False,  # This makes the field optional
-        help_text='Select the muscle groups targeted by this exercise.'
+        widget=forms.CheckboxSelectMultiple,
+        required=False, 
     )
 
     class Meta:
         model = Exercise
-        fields = ['name', 'description', 'muscle_groups']  # Include muscle_groups in the form fields
+        fields = ['name', 'description', 'muscle_groups']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Enter exercise name'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Enter exercise description', 'rows': 4}),
+            'description': forms.Textarea(attrs={'placeholder': 'Enter exercise description', 'rows': 2}),
         }
         labels = {
             'name': 'Exercise Name',
             'description': 'Description',
             'muscle_groups': 'Muscle Groups'
         }
+
+
+class ExerciseRecordForm(forms.ModelForm):
+    """
+    A form for adding or updating exercise records.
+    """
+    class Meta:
+        model = ExerciseRecord
+        fields = ['reps', 'weight']
+    
+    def __init__(self, *args, **kwargs):
+        self.exercise_id = kwargs.pop('exercise_id', None)
+        super().__init__(*args, **kwargs)
+
+
+class WorkoutForm(forms.ModelForm):
+    """
+    A form for adding or updating workouts.
+    """
+    exercises = forms.ModelMultipleChoiceField(
+        queryset=Exercise.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
+
+    class Meta:
+        model = Workout
+        fields = ['name', 'exercises']
+
+
+class WorkoutRecordForm(forms.ModelForm):
+    """
+    A form for adding or updating workout records.
+    """
+    class Meta:
+        model = WorkoutRecord
+        fields = ['workout', 'date', 'isCompleted']

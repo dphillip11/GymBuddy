@@ -5,25 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}GymBuddy{% endblock %}</title>
+
     {% load static %}
+
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'workoutPlanner/css/styles.css' %}">
-    <script src="{% static 'theme.js' %}" defer></script>
-    <script src="{% static 'ajax_request_builder.js' %}" defer></script>
-    {% block additional_scripts %}{% endblock %} 
+
+    <script src="{% static 'js/theme.js' %}" defer></script>
+    <script src="{% static 'js/update_items.js' %}" defer></script>
+
+    {% block scripts %}
+    {% endblock %}
 </head>
 <body>
     <header>
         <nav id="nav-buttons">
             <a href="{% url 'calendar' %}"><button>Calendar</button></a>
-            <a href="{% url 'workout_list' %}"><button>Workouts</button></a>
-            <a href="{% url 'exercise_list' %}"><button>Exercises</button></a>
+            <a href="{% url 'workouts' %}"><button>Workouts</button></a>
+            <a href="{% url 'exercises' %}"><button>Exercises</button></a>
             <button id="theme-toggle">Toggle Theme</button>           
         </nav>
     </header>
 
     <main>
+        <iframe id="response_iframe" name="response_iframe"></iframe>
         <!-- spacer.html -->
         <div style="height:80px;"></div>
         {% block content %}

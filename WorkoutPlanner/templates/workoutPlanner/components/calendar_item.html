@@ -1,31 +1,16 @@
-    <h1>{{ day }}</h1>
-    {% if workout_history.is_completed %}
-        <h2 style="color:green;">Workout: {{ workout_history.workout.name }}</h2>
-    {% elif workout_history.is_future %}
-        <h2>{{ workout_history.workout.name }}</h2>
-    {% elif workout_history.is_today %}
-        <h2 style="color:blue;">{{ workout_history.workout.name }}</h2>
-    {% else %}
-        <h2 style="color:red;">{{ workout_history.workout.name }}</h2>
-    {% endif %}
+<div class="framed calendar-item secondary {% if item.is_today %}highlight{% endif %}""
+id="calendar_item_{{item.year}}_{{item.month}}_{{item.day}}">
+    <h3>{{ item.day }}</h3>
 
-    {% if workout_history.is_future or workout_history.is_today %}
-    <form id="update-workout-form-{{ year }}-{{ month }}-{{ day }}" method="post">
-        {% csrf_token %}
-        <select name="workout" id="workout-select-{{ year }}-{{ month }}-{{ day }}">
-            <option value="">Select a Workout</option>
-            <option value="-1">None</option>
-            {% for workout in workouts %}
-                <option value="{{ workout.id }}">{{ workout.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="hidden" name="year" value="{{ year }}">
-        <input type="hidden" name="month" value="{{ month }}">
-        <input type="hidden" name="day" value="{{ day }}">
-    </form>
+    {% if item.is_today and not item.is_completed and item.workout_entries %}
+        <a href="{% url 'gymbuddy' item.workout_entries.0.id %}"
+            <button class="tag secondary">Start Workout</button>
+        </a>
     {% endif %}
-
-    {% if workout_history.is_today and workout_history.workout.id %}
-        <a href="{% url 'active_workout' workout_history.workout.id %}"><button>Do workout</button></a>
-    {% endif %}
-
+    {% if item.is_completed %}<p>(Completed)</p>{% endif %}
+    <ul>
+        {% for workout in item.workout_entries %}
+            <li>{{ workout.name }}</li>
+        {% endfor %}
+    </ul>
+</div>

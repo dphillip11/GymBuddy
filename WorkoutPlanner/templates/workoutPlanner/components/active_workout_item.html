@@ -1,27 +1,30 @@
-<div class="workout-item">
-    <div class="exercise-description">
-        <h3>{{ workout_item.exercise.name }}</h3>
-        <p>{{ workout_item.exercise.description }}</p>
-    </div>
-    <div class="workout-item-flex">
-        <div class="previous-exercise-record">
-            {%  if workout_item.previous_records %}
-                <p>Most Recent: {{ workout_item.previous_records.0.date }}</p>
-                {% include 'workoutplanner/components/exercise_records_component.html' with exercise_records=workout_item.previous_records %}
-            {%  endif %}
-        </div>
-        <div class="previous-exercise-record">
-            <p>Today's Lifts</p>
-            {% include 'workoutplanner/components/exercise_records_component.html' with exercise_records=workout_item.todays_records %}
-        </div>
-        <div class="exercise-inputs">
-            <form method="post" action="{% url 'add_exercise_record' %}">
-                {% csrf_token %}
-                <input type="hidden" name="exercise_id" value="{{ workout_item.exercise.id }}">
-                <input type="number" name="reps" placeholder="Reps" required>
-                <input type="number" name="weight" placeholder="Weight" required>
-                <button type="submit">+</button>
-            </form>
-        </div>
+<div class="framed secondary" id="active_workout_item_{{item.exercise_id}}">
+    <h2>{{item.name}}<h2>
+    <p>{{item.description}}</p>
+    <div class="row">
+
+    {% if item.previous_record_item.records %}
+        <div class="framed primary" >
+            <p class="centered no-margin" >PREVIOUS<p>
+    {% endif %}  
+
+    {% include 'workoutplanner/components/exercise_records_item.html' with item=item.previous_record_item %}
+
+    {% if item.previous_record_item.records %}
+        </div >
+    {% endif %}  
+
+    {% if item.todays_record_item.records %}
+        <div class="framed primary" >
+            <p class="centered no-margin" >TODAY<p>
+    {% endif %}
+
+    {% include 'workoutplanner/components/exercise_records_item.html' with item=item.todays_record_item %}
+
+    {% if item.todays_record_item.records %}
+        </div >
+    {% endif %}
+
+    {% include 'workoutplanner/forms/exercise_record_form.html' with form=form exercise_id=item.exercise_id %}
     </div>
 </div>

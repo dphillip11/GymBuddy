@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Workouts{% endblock %}
+
+{% block content %}
+    <h1>Workouts</h1>
+    {% for workout in workouts %}
+        <a href="{% url 'workout' workout.id %}"><h2 class="framed secondary">{{workout.name}}</h2></a>
+    {% endfor %}
+    
+    {% include 'workoutplanner/forms/generic_form.html' with form=form form_action=form_action %}
+{% endblock %}

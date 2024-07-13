@@ -1,0 +1,11 @@
+<div class="framed secondary" id="exercise_detail_{{item.exercise_id}}">
+    <h2>{{item.name}}</h2>
+    <h3>{{item.description}}<h3>
+    <div class="row">
+        {% for tag in item.muscle_groups %}
+        <div class="tag highlight">
+            {{ tag }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
