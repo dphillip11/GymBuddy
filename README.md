@@ -9,10 +9,41 @@ This document provides a detailed list of all routes used in the Django project.
 
 ## Table of Contents
 
+- [Architecture](#arcjitexture)
 - [Page Routes](#page-routes)
 - [Model Creation Routes](#model-creation-routes)
 - [Model Deletion Routes](#model-deletion-routes)
 - [Model Update Routes](#model-update-routes)
+
+---
+
+## Architecture
+
+[View the PDF](docs/GymBuddyLayout.pdf)
+
+The application is designed to manage workout plans, exercises, and records with a focus on dynamic, server-authoritative updates using WebSockets. The architecture is organized into three main components:
+
+1. **Forms** - Responsible for editing models.
+2. **Data Queries** - Responsible for querying models and providing views with data.
+3. **Component Views** - Triggered by WebSocket connections to dynamically update individual elements on the page.
+
+## 1. Forms
+
+### Role
+
+Forms are used to handle the creation, updating, and deletion of models. They provide the user interface for data entry and are directly linked to Django’s model layer to perform CRUD (Create, Read, Update, Delete) operations.
+
+## 2. Data Queries
+
+### Role
+
+Data queries are responsible for retrieving data from the database. They provide the necessary data to views and templates through data classes and query functions.
+
+## 3. Component Views
+
+### Role
+
+Component views are triggered by WebSocket connections. They handle dynamic updates of individual elements on the page without requiring a full page reload. This approach allows for server-side authority and reduces the coupling between models and page updates.
 
 ---
 
