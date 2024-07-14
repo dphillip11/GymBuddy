@@ -121,6 +121,7 @@ def update_workout_record(request, workout_record_id):
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
     workout_record.is_completed = True
     workout_record.date = timezone.datetime.today()
+    workout_record.user = request.user
     workout_record.save()
         
     return redirect(reverse("calendar"));

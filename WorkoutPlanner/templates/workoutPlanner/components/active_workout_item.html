@@ -6,6 +6,7 @@
         {% if item.previous_record_item.records %}
             <div class=" centered framed primary flex-item start">
                 <p class="centered no-margin" >PREVIOUS</p>
+                <p class="centered no-margin" style="margin-bottom:5px;">{{item.previous_record_item.records.0.date}}</p>
         {% endif %}  
         {% include 'workoutplanner/components/exercise_records_item.html' with item=item.previous_record_item %}
         {% if item.previous_record_item.records %}
@@ -13,7 +14,7 @@
         {% endif %}  
 
         <div class="centered framed primary flex-item start">
-            <p class="centered no-margin" >TODAY</p>
+            <p class="centered no-margin" style="margin-bottom:5px;">TODAY</p>
             {% include 'workoutplanner/components/exercise_records_item.html' with item=item.todays_record_item %}
         </div >
 

@@ -1,7 +1,9 @@
-# workoutplanner/consumers.py
-
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
+
+# project
+from WorkoutPlanner.views.metrics import fetch_exercise_records
+
 
 class UpdateItemsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -35,3 +37,19 @@ class UpdateItemsConsumer(AsyncWebsocketConsumer):
             'new_content': new_content,
             'append': append
         }))
+
+
+class ExerciseRecordConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+
+    def receive(self, text_data):
+        data = json.loads(text_data)
+        exercise_id = data.get('exercise_id')
+        muscle_group_id = data.get('muscle_group_id')
+        start_date = data.get('start_date')
+        end_date = data.get('end_date')
+
+        records = fetch_exercise_records(exercise_id, muscle_group_id, start_date, end_date)
+
+        self.send(text_data=json.dumps(records))

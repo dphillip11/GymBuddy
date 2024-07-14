@@ -31,9 +31,8 @@
 #timer-display{
     letter-spacing: 5px;
     display: inline-block;
-    transform: scaleX(3.0);
     font-weight: bolder;
-    font-size: large;
+    font-size: xx-large;
     color: red;
     text-shadow: 1px white;
 }

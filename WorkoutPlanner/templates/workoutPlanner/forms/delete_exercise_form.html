@@ -2,6 +2,6 @@
 {% if request.user|is_superuser %}
 <form method="post" action="{% url 'delete_exercise' exercise.id %}" target="response_iframe">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    <button type="submit" class="warning" onclick="return confirmDelete('exercise')">Delete</button>
+    <button type="submit" class="warning small-square" onclick="return confirmDelete('exercise')">Delete</button>
 </form>
 {% endif %}

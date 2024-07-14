@@ -1,5 +1,3 @@
-// theme.js
-
 // Function to set the current theme in localStorage
 function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);

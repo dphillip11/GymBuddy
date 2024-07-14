@@ -7,13 +7,13 @@ import calendar
 # project
 from WorkoutPlanner.data_queries import get_active_workout_item_data, get_calendar_item_data, get_exercise_detail_item_data
 from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
-from WorkoutPlanner.models import Exercise, Workout, WorkoutRecord
+from WorkoutPlanner.models import Exercise, MuscleGroup, Workout, WorkoutRecord
 
 def calendar_view(request, year=None, month=None):
     """
     Display the calendar view.
     """
-     # Get the current date if year and month are not provided
+    # Get the current date if year and month are not provided
     if not year or not month:
         today = timezone.now()
         year = year or today.year
@@ -95,6 +95,22 @@ def gymbuddy_view(request, workout_record_id):
     }
 
     return render(request, 'workoutplanner/pages/gymbuddy_page.html', context )
+
+
+def metrics_view(request):
+    """
+    Display graphs and metrics about exercise history
+    """
+    exercises = Exercise.objects.all()
+    muscle_groups = MuscleGroup.objects.all()
+    
+    context = {
+        'exercises': exercises,
+        'muscle_groups': muscle_groups,
+    }
+    
+    return render(request, 'workoutplanner/pages/metrics_page.html', context)
+
 
 def workout_view(request, workout_id):
     """

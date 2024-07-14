@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Metrics{% endblock %}
+
+{% block scripts %}
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+<script src="{% static 'workoutPlanner/js/metrics.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Metrics</h1>
+    <form id="filter-form">
+        <select id="exercise-filter" name="exercise">
+            <option value="">Select Exercise</option>
+            {% for exercise in exercises %}
+                <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+            {% endfor %}
+        </select>
+        <select id="muscle-group-filter" name="muscle_group">
+            <option value="">Select Muscle Group</option>
+            {% for group in muscle_groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <select id="muscle-group-filter" name="muscle_group">
+            <option value="">Select Muscle Group</option>
+            {% for group in muscle_groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="date" id="start-date" name="start_date">
+        <input type="date" id="end-date" name="end_date">
+        <button type="submit">Update Graph</button>
+    </form>
+    <canvas class="framed padded_5" id="exerciseChart" width="400" height="200"></canvas>
+    {% endblock %}
