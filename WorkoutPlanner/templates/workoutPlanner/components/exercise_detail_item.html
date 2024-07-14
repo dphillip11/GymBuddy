@@ -7,7 +7,8 @@
             {{ tag }}
         </div>
         {% endfor %}
-
-        {% include 'workoutplanner/forms/delete_exercise_form.html' with exercise=item %}
     </div>
+    {% if not workout %}
+    {% include 'workoutplanner/forms/delete_exercise_form.html' with exercise=item %}
+    {% endif %}
 </div>

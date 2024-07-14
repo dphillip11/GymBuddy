@@ -154,7 +154,7 @@ form div
 .secondary
 {
     background-color: var(--secondary-bg-color);
-    color: var(--secondary-text-color);
+    color: var(--secondary-text-color)!important;
 }
 
 .highlight
@@ -227,4 +227,15 @@ form div
     color: white;
     background-color: rgb(155, 0, 0);
     font-weight: bold;
+}
+
+.confirm{
+    color: white;
+    background-color: green;
+    border: solid 2px greenyellow;
+    font-weight: bold;
+}
+
+.confirm:hover{
+    background-color: greenyellow;
 }

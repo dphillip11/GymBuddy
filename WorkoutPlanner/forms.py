@@ -55,7 +55,6 @@ class WorkoutForm(forms.ModelForm):
 
 
 class WorkoutRecordForm(forms.ModelForm):
-    workout = forms.ModelChoiceField(queryset=Workout.objects.all(), empty_label="Add a workout")
 
     class Meta:
         model = WorkoutRecord

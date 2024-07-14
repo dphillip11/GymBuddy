@@ -86,12 +86,12 @@ def gymbuddy_view(request, workout_record_id):
         get_active_workout_item_data(exercise.id)
         for exercise in workout_record.workout.exercises.all()
     ]
-    print(items)
 
     context = {
         'workout_record': workout_record,
         'active_workout_items': items,
-        'form':ExerciseRecordForm()
+        'form':ExerciseRecordForm(),
+        'workout_record_form':WorkoutRecordForm()
     }
 
     return render(request, 'workoutplanner/pages/gymbuddy_page.html', context )

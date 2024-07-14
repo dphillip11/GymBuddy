@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.utils import timezone
@@ -118,11 +119,11 @@ def update_workout_record(request, workout_record_id):
     Update an existing workout record.
     """
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
-    form = WorkoutRecordForm(request.POST, instance=workout_record)
-    if form.is_valid():
-        form.save()
-        return HttpResponse("Workout record updated successfully")
-    return HttpResponseBadRequest("Invalid form data")
+    workout_record.is_completed = True
+    workout_record.date = timezone.datetime.today()
+    workout_record.save()
+        
+    return redirect(reverse("calendar"));
 
 
 @require_POST

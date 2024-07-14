@@ -12,6 +12,10 @@
 
     <div class="framed secondary" id="gymbuddy-toolbar">
         {% include 'workoutplanner/timer.html' %}
+        <form method="post" action="{% url 'update_workout_record' workout_record.id %}">
+            {% csrf_token %}
+            <button class="confirm" type="submit">Finish Workout</button>
+        </form>
     </div>
     
     <h1>Gym Buddy</h1>

@@ -1,5 +1,5 @@
 <div class="framed secondary" id="workout_item_{{workout.id}}">
-    <a href="{% url 'workout' workout.id %}" ><h2>{{workout.name}}</h2></a>
+    <a class="secondary" href="{% url 'workout' workout.id %}" ><h2>{{workout.name}}</h2></a>
 
     {% include 'workoutplanner/forms/delete_workout_form.html' %}
 </div>
