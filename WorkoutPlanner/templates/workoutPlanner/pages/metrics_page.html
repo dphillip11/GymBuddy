@@ -24,11 +24,9 @@
                 <option value="{{ group.id }}">{{ group.name }}</option>
             {% endfor %}
         </select>
-        <select id="muscle-group-filter" name="muscle_group">
-            <option value="">Select Muscle Group</option>
-            {% for group in muscle_groups %}
-                <option value="{{ group.id }}">{{ group.name }}</option>
-            {% endfor %}
+        <select id="metric-filter" name="metric" default:"volume">
+            <option value="volume">Volume</option>
+            <option value="max_lift">Max Lift</option>
         </select>
         <input type="date" id="start-date" name="start_date">
         <input type="date" id="end-date" name="end_date">

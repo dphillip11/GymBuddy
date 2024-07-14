@@ -29,10 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateGraph(data) {
         const labels = data.data.map(record => record.date);
-        const volumes = data.data.map(record => record.volume);
-
-        exerciseChart.data.labels = labels;
-        exerciseChart.data.datasets[0].data = volumes;
+        // Update the chart based on the selected metric
+        if (data.metric === "volume") 
+        {
+            const volumes = data.data.map(record => record.volume);
+            exerciseChart.data.labels = labels;
+            exerciseChart.data.datasets[0].data = volumes;
+            exerciseChart.data.datasets[0].label = 'Total Volume';
+    
+        } 
+        else if (data.metric === "max_lift") 
+        {
+            const lifts = data.data.map(record => record.max_lift);
+            exerciseChart.data.labels = labels;
+            exerciseChart.data.datasets[0].data = lifts;
+            exerciseChart.data.datasets[0].label = 'Max Lift';
+        } 
+        else 
+        {
+            console.error('Unsupported metric type:', data.metric);
+            return;
+        }
+    
         exerciseChart.update();
     }
 
@@ -41,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log(data)
             updateGraph(data);
         };
 
@@ -52,12 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             const exerciseId = formData.get('exercise');
             const muscleGroupId = formData.get('muscle_group');
+            const metric = formData.get('metric');
             const startDate = formData.get('start_date');
             const endDate = formData.get('end_date');
 
             socket.send(JSON.stringify({
                 exercise_id: exerciseId,
                 muscle_group_id: muscleGroupId,
+                metric: metric,
                 start_date: startDate,
                 end_date: endDate,
             }));

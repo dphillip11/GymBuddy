@@ -47,9 +47,10 @@ class ExerciseRecordConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         exercise_id = data.get('exercise_id')
         muscle_group_id = data.get('muscle_group_id')
+        metric = data.get('metric')
         start_date = data.get('start_date')
         end_date = data.get('end_date')
 
-        records = fetch_exercise_records(exercise_id, muscle_group_id, start_date, end_date)
+        records = fetch_exercise_records(exercise_id, muscle_group_id, metric, start_date, end_date)
 
         self.send(text_data=json.dumps(records))
