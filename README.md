@@ -58,6 +58,7 @@ These routes are used to render various pages of the application.
 | `calendar/<int:year>/<int:month>/`         | `calendar_view`     | `calendar_with_params`   | Calendar view with year and month params |
 | `exercises/`                                | `exercises_view`    | `exercises`               | Exercises view                      |
 | `gymbuddy/<int:workout_id>`                 | `gymbuddy_view`     | `gymbuddy`                | Gym buddy view for a specific workout |
+| `metrics/`                                  | `metrics`           | `metrics`                 | Exercise metrics                    |
 | `workout/<int:workout_id>/`                 | `workout_view`      | `workout`                 | Workout view for a specific workout |
 | `workouts/`                                 | `workouts_view`     | `workouts`                | Workouts view                        |
 

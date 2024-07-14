@@ -17,7 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from GymBuddy.views import register, user_login, user_logout
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('register/', register, name='register'),
     path('', include('WorkoutPlanner.urls')), 
 ]

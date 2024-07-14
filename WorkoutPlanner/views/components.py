@@ -40,7 +40,7 @@ def update_item(request, template_name, context, element_id, append=False):
 
 
 def append_exercise_detail_item(request, exercise_id):
-    context_data = {'item': get_exercise_detail_item_data(exercise_id)}
+    context_data = {'item': get_exercise_detail_item_data(request, exercise_id)}
     element_id = 'exercise_detail_list'
     update_item(request, 'workoutplanner/components/exercise_detail_item.html', context_data, element_id, append=True)
 
@@ -52,25 +52,25 @@ def append_workout_item(request, workout_id):
 
 
 def update_active_workout_item(request, exercise_id):
-    context_data = {'item': get_active_workout_item_data(exercise_id)}
+    context_data = {'item': get_active_workout_item_data(request, exercise_id)}
     element_id = f'active_workout_item_{exercise_id}'
     update_item(request, 'workoutplanner/components/active_workout_item.html', context_data, element_id)
 
 
 def update_calendar_item(request, date):
-    context = {'item': get_calendar_item_data(date)}
+    context = {'item': get_calendar_item_data(request, date)}
     element_id = f'calendar_item_{date.year}_{date.month}_{date.day}'
     update_item(request, 'workoutplanner/components/calendar_item.html', context, element_id)
 
 
 def update_exercise_detail_item(request, exercise_id):
-    context = {'item': get_exercise_detail_item_data(exercise_id)}
+    context = {'item': get_exercise_detail_item_data(request, exercise_id)}
     element_id = f'exercise_detail_item_{exercise_id}'
     update_item(request, 'workoutplanner/components/exercise_detail_item.html', context, element_id)
 
 
 def update_exercise_records_item(request, exercise_id, year, month, day):
-    context = {'item': get_exercise_records_item_data(exercise_id, year, month, day)}
+    context = {'item': get_exercise_records_item_data(request, exercise_id, year, month, day)}
     element_id = f'exercise_records_item_{exercise_id}_{year}_{month}_{day}'
     update_item(request, 'workoutplanner/components/exercise_records_item.html', context, element_id)
 

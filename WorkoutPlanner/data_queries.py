@@ -9,7 +9,7 @@ from .data_classes import (
 )
 
 
-def get_active_workout_item_data(exercise_id):
+def get_active_workout_item_data(request, exercise_id):
     """
     Construct `ActiveWorkoutItemData` for the given `exercise_id`.
 
@@ -21,14 +21,14 @@ def get_active_workout_item_data(exercise_id):
     """
     exercise = Exercise.objects.get(id=exercise_id)
     todays_date = datetime.date.today()
-    last_date = ExerciseRecord.objects.filter(exercise=exercise, date__lt=todays_date).order_by('-date').values_list('date', flat=True).first()
+    last_date = ExerciseRecord.objects.filter(user=request.user, exercise=exercise, date__lt=todays_date).order_by('-date').values_list('date', flat=True).first()
 
     previous_record_item = None
 
     if last_date:
-        previous_record_item = get_exercise_records_item_data( exercise_id,last_date.year, last_date.month, last_date.day )
+        previous_record_item = get_exercise_records_item_data(request, exercise_id,last_date.year, last_date.month, last_date.day )
 
-    todays_record_item = get_exercise_records_item_data( exercise_id,todays_date.year, todays_date.month, todays_date.day )
+    todays_record_item = get_exercise_records_item_data(request, exercise_id,todays_date.year, todays_date.month, todays_date.day )
 
     return ActiveWorkoutItemData(
         exercise_id=exercise.id,
@@ -39,7 +39,7 @@ def get_active_workout_item_data(exercise_id):
     )
 
 
-def get_calendar_item_data(date):
+def get_calendar_item_data(request, date):
     """
     Construct `CalendarItemData` for the given date.
 
@@ -52,7 +52,8 @@ def get_calendar_item_data(date):
         CalendarItemData: The data class instance containing the workout entries for the given date.
     """
     workout_records = WorkoutRecord.objects.filter(
-        date=date
+        date=date,
+        user=request.user
     ).select_related('workout')   
 
     workout_records = [workout_record for workout_record in workout_records]
@@ -66,7 +67,7 @@ def get_calendar_item_data(date):
     )
 
 
-def get_exercise_detail_item_data(exercise_id):
+def get_exercise_detail_item_data(request, exercise_id):
     """
     An indirection between the database query and the view
     """
@@ -76,7 +77,7 @@ def get_exercise_detail_item_data(exercise_id):
         return None
     
 
-def get_exercise_records_item_data(exercise_id, year, month, day):
+def get_exercise_records_item_data(request, exercise_id, year, month, day):
     """
     Construct `ExerciseRecordsItemData` for the given exercise and date.
 
@@ -89,7 +90,7 @@ def get_exercise_records_item_data(exercise_id, year, month, day):
     Returns:
         ExerciseRecordsItemData: The data class instance containing records for the exercise on the specified date.
     """
-    records = list(ExerciseRecord.objects.filter(exercise_id=exercise_id, date__year=year, date__month=month, date__day=day).values('date', 'reps', 'weight'))
+    records = list(ExerciseRecord.objects.filter(user=request.user, exercise_id=exercise_id, date__year=year, date__month=month, date__day=day).values('date', 'reps', 'weight'))
 
     return ExerciseRecordsItemData(
         exercise_id=exercise_id,

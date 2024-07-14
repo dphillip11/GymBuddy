@@ -2,6 +2,7 @@ import datetime
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 import calendar
 
 # project
@@ -9,6 +10,7 @@ from WorkoutPlanner.data_queries import get_active_workout_item_data, get_calend
 from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
 from WorkoutPlanner.models import Exercise, MuscleGroup, Workout, WorkoutRecord
 
+@login_required
 def calendar_view(request, year=None, month=None):
     """
     Display the calendar view.
@@ -21,7 +23,7 @@ def calendar_view(request, year=None, month=None):
 
     num_days = calendar.monthrange(year, month)[1]
     calendar_items = [
-        get_calendar_item_data(datetime.date(year, month, day))
+        get_calendar_item_data(request, datetime.date(year, month, day))
         for day in range(1, num_days + 1)
     ]
 
@@ -55,7 +57,7 @@ def exercises_view(request):
     Display the list of exercises.
     """
     items = [
-        get_exercise_detail_item_data(exercise.id)
+        get_exercise_detail_item_data(request, exercise.id)
         for exercise in Exercise.objects.all()
     ]
 
@@ -69,6 +71,7 @@ def exercises_view(request):
     return render(request, 'workoutplanner/pages/exercises_page.html', context )
 
 
+@login_required
 def gymbuddy_view(request, workout_record_id):
     """
     Display the gymbuddy page and perform a workout.
@@ -83,7 +86,7 @@ def gymbuddy_view(request, workout_record_id):
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
 
     items = [
-        get_active_workout_item_data(exercise.id)
+        get_active_workout_item_data(request, exercise.id)
         for exercise in workout_record.workout.exercises.all()
     ]
 
@@ -97,6 +100,7 @@ def gymbuddy_view(request, workout_record_id):
     return render(request, 'workoutplanner/pages/gymbuddy_page.html', context )
 
 
+@login_required
 def metrics_view(request):
     """
     Display graphs and metrics about exercise history

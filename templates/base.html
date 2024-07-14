@@ -26,7 +26,10 @@
             <a href="{% url 'metrics' %}"><button>Metrics</button></a>
             <a href="{% url 'workouts' %}"><button>Workouts</button></a>
             <a href="{% url 'exercises' %}"><button>Exercises</button></a>
-            <button id="theme-toggle">Toggle Theme</button>           
+            <button id="theme-toggle">Toggle Theme</button>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}"><button>Logout</button></a>
+            {% endif %}       
         </nav>
     </header>
 
