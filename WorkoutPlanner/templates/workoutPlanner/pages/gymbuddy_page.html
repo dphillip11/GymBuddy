@@ -2,8 +2,20 @@
 
 {% block title %}Gym Buddy{% endblock %}
 
+{% block scripts %}
+{% load static %}
+<script src="{% static 'workoutPlanner/js/timer.js' %}" defer></script>
+{% endblock %}
+
+
 {% block content %}
+
+    <div class="framed secondary" id="gymbuddy-toolbar">
+        {% include 'workoutplanner/timer.html' %}
+    </div>
+    
     <h1>Gym Buddy</h1>
+
     {% for item in active_workout_items %}
         {% include 'workoutplanner/components/active_workout_item.html' %}
     {% endfor %}

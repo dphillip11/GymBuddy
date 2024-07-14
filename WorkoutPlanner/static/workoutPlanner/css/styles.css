@@ -28,3 +28,23 @@
     text-align: center;
 }
 
+#timer-display{
+    letter-spacing: 5px;
+    display: inline-block;
+    transform: scaleX(3.0);
+    font-weight: bolder;
+    font-size: large;
+    color: red;
+    text-shadow: 1px white;
+}
+
+#gymbuddy-toolbar{
+    position: fixed;
+    display:flex;
+    justify-content: end;
+    top:80px;
+    right:10px;
+    width: max-content;
+    height: max-content;
+}
+

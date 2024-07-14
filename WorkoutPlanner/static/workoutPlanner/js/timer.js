@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startButton = document.getElementById('start-button');
     let stopButton = document.getElementById('stop-button');
     let resetButton = document.getElementById('reset-button');
+    let logExerciseButtons = document.querySelectorAll(".log-exercise");
 
     let startTime;
     let updatedTime;
@@ -49,4 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     startButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     resetButton.addEventListener('click', resetTimer);
+
+    logExerciseButtons.forEach(element => {
+        element.addEventListener('click', startTimer);
+    });
 });
