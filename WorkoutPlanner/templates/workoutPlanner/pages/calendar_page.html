@@ -10,11 +10,14 @@
         <a href="{{ next_month_url }}"><button class="tag highlight">Next Month</button></a>
     </div>
     <div id="calendar-grid">
+    {% load comparison_tags %}
     {% for item in calendar_items %}
         <div class="framed column {% if item.is_today %}highlight{% else %}secondary{% endif %} centered flex flex-item">
             <h3>{{ item.date.day }}</h3>
             {% include 'workoutplanner/components/calendar_item.html' %}
-            {% include 'workoutplanner/forms/workout_record_form.html' %}
+            {% if not item.date|is_past %}
+                {% include 'workoutplanner/forms/workout_record_form.html' %}
+            {% endif %}
         </div>
     {% endfor %}
     </div>

@@ -1,4 +1,4 @@
-<div class="framed flex-item calendar-item primary"
+<div class="flex-item calendar-item"
 id="calendar_item_{{item.date.year}}_{{item.date.month}}_{{item.date.day}}">
     {% for workout_record in item.workout_records %}
      <div class="flex row" id="workout_record_item_{{workout_record.id}}">
@@ -6,13 +6,13 @@ id="calendar_item_{{item.date.year}}_{{item.date.month}}_{{item.date.day}}">
         {% if not workout_record.is_completed %}
             <form method="post" action="{% url 'delete_workout_record' workout_record.id %}" target="response_iframe">
                 {% csrf_token %}
-                <button class="small-square" type="submit">-</button>
+                <button class="small-square{% if item.is_today %} secondary{% endif %}" type="submit">-</button>
             </form>
         {% else %}
-            <div class="centered padded_5" style="color:green"><b>DONE</b></div>
+            <div class="centered padded_5 green-icon"><i class="fas fa-check"></i></div>
         {% endif %}
         {% if item.is_today and not workout_record.is_completed %}
-            <a href="{% url 'gymbuddy' workout_record.workout.id %}"><button class="small-square" type="submit">Start</button></a>
+            <a href="{% url 'gymbuddy' workout_record.id %}"><button class="secondary small-square" type="submit">Start</button></a>
         {% endif %}
     </div>
     {% endfor %}

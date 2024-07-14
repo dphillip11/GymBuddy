@@ -18,23 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const newElement = document.createElement('div');
             newElement.innerHTML = htmlContent;
 
-            const forms = newElement.querySelectorAll('form');
-            forms.forEach(form => {
-                let csrfInput = form.querySelector('input[name="csrfmiddlewaretoken"]');
-                if (csrfInput) {
-                    csrfInput.value = window.csrfToken;
-                    console.log("CSRF token updated in form");
-                } else {
-                    // If there's no csrfmiddlewaretoken input, create one
-                    const newCsrfInput = document.createElement('input');
-                    newCsrfInput.type = 'hidden';
-                    newCsrfInput.name = 'csrfmiddlewaretoken';
-                    newCsrfInput.value = window.csrfToken;
-                    form.appendChild(newCsrfInput);
-                    console.log("CSRF token added to form");
-                }
-            });
-
             const newContent = newElement.firstChild;
 
             // Find the element with the given ID and update its innerHTML
@@ -61,3 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log('WebSocket connection closed:', event);
         };
     });
+
+
+function confirmDelete(name) {
+    // Show a confirmation dialog
+    return confirm('Are you sure you want to delete this ' + name + '? This action cannot be undone and may affect other data.');
+}

@@ -55,8 +55,14 @@ class Command(BaseCommand):
         # Populate workouts
         for workout_data in data['workouts']:
             workout, created = Workout.objects.get_or_create(name=workout_data['name'])
-            for exercise_info in workout_data['exercises']:
-                exercise = exercise_dict[exercise_info['name']]
+            exercises_to_add = []
+            for exercise_data in workout_data.get('exercises', []):
+                exercise = exercise_dict.get(exercise_data['name'])
+                if exercise:
+                    exercises_to_add.append(exercise)
+                else:
+                    self.stdout.write(self.style.ERROR(f"Exercise '{exercise_data['name']}' not found for Workout '{workout_data['name']}'"))
+            workout.exercises.set(exercises_to_add)
 
         # Populate users
         user_dict = {}
@@ -75,8 +81,9 @@ class Command(BaseCommand):
         for record_data in data['exercise_records']:
             exercise = exercise_dict.get(record_data['exercise_name'])
             if exercise:
+                user = user_dict.get(record_data['user'], User.objects.first())
                 ExerciseRecord.objects.create(
-                    user=user_dict[record_data['user']],
+                    user=user,
                     exercise=exercise,
                     date=parse_date(record_data['date']),
                     weight=record_data['weight'],
@@ -88,8 +95,8 @@ class Command(BaseCommand):
         # Populate workout records and mark as completed if the date is before today
         today = parse_date('2024-07-14')  # Use a fixed date for testing or replace with datetime.date.today() for the current date
         for record_data in data['workout_records']:
-            workout = Workout.objects.filter(id=record_data['workout_id']).first()
-            user = user_dict.get(record_data['user'])
+            workout = Workout.objects.filter(id=record_data['workout_id']).first() or Workout.objects.first()
+            user = user_dict.get(record_data['user'], User.objects.first())
             if workout and user:
                 is_completed = parse_date(record_data['date']) < today
                 WorkoutRecord.objects.create(

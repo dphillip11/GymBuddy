@@ -7,7 +7,7 @@ import calendar
 # project
 from WorkoutPlanner.data_queries import get_active_workout_item_data, get_calendar_item_data, get_exercise_detail_item_data
 from WorkoutPlanner.forms import ExerciseForm, ExerciseRecordForm, WorkoutForm, WorkoutRecordForm
-from WorkoutPlanner.models import Exercise, Workout
+from WorkoutPlanner.models import Exercise, Workout, WorkoutRecord
 
 def calendar_view(request, year=None, month=None):
     """
@@ -69,7 +69,7 @@ def exercises_view(request):
     return render(request, 'workoutplanner/pages/exercises_page.html', context )
 
 
-def gymbuddy_view(request, workout_id):
+def gymbuddy_view(request, workout_record_id):
     """
     Display the gymbuddy page and perform a workout.
     
@@ -80,19 +80,18 @@ def gymbuddy_view(request, workout_id):
     Returns:
         HttpResponse: The rendered gymbuddy page with workout details.
     """
-    workout = get_object_or_404(Workout, id=workout_id)
+    workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
 
     items = [
         get_active_workout_item_data(exercise.id)
-        for exercise in workout.exercises.all()
+        for exercise in workout_record.workout.exercises.all()
     ]
+    print(items)
 
     context = {
-        'workout': workout,
+        'workout_record': workout_record,
         'active_workout_items': items,
-        'form':ExerciseRecordForm(),
-        'form_name':"Log Exercise",
-        'form_action':reverse('create_exercise_record')
+        'form':ExerciseRecordForm()
     }
 
     return render(request, 'workoutplanner/pages/gymbuddy_page.html', context )

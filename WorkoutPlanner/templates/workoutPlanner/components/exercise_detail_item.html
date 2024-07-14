@@ -1,5 +1,4 @@
 <div class="framed secondary" id="exercise_detail_{{item.id}}">
-    {{item}}
     <h2>{{item.name}}</h2>
     <h3>{{item.description}}<h3>
     <div class="row">
@@ -8,5 +7,7 @@
             {{ tag }}
         </div>
         {% endfor %}
+
+        {% include 'workoutplanner/forms/delete_exercise_form.html' with exercise=item %}
     </div>
 </div>

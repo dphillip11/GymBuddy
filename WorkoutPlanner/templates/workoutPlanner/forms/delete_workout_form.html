@@ -1,0 +1,7 @@
+{% load comparison_tags %}
+{% if request.user|is_superuser %}
+<form method="post" action="{% url 'delete_workout' workout.id %}" target="response_iframe">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <button type="submit" class="warning" onclick="return confirmDelete('workout')">Delete</button>
+</form>
+{% endif %}

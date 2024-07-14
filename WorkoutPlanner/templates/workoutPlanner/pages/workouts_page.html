@@ -4,9 +4,11 @@
 
 {% block content %}
     <h1>Workouts</h1>
+    <div id="workout_list">
     {% for workout in workouts %}
-        <a href="{% url 'workout' workout.id %}"><h2 class="framed secondary">{{workout.name}}</h2></a>
+        {% include 'workoutplanner/components/workout_item.html' %}
     {% endfor %}
+    </div>
     
     {% include 'workoutplanner/forms/generic_form.html' %}
 {% endblock %}

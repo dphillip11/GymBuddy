@@ -1,6 +1,6 @@
 <div class="workout_record_form row centered" id="workout_record_form_{{ item.date.year }}_{{ item.date.month }}_{{ item.date.day }}">
     <form method="post" action="{% url 'create_workout_record' %}" target="response_iframe">
-        {% csrf_token %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <div class="form-group">
             {{ form.workout }}
             {{ form.is_completed }}

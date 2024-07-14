@@ -20,7 +20,7 @@ def create_exercise(request):
         new_exercise = form.save()
 
         # apepnd to item list
-        components.append_exercise_detail_item(new_exercise.id)
+        components.append_exercise_detail_item(request, new_exercise.id)
 
         return HttpResponse("Exercise created successfully")
     return HttpResponseBadRequest("Invalid form data")
@@ -45,7 +45,7 @@ def create_exercise_record(request):
         exercise_record.save()
 
         # update item
-        components.update_exercise_records_item(exercise_id, date.year, date.month, date.day)
+        components.update_exercise_records_item(request, exercise_id, date.year, date.month, date.day)
 
         return HttpResponse("Exercise record created successfully")
     return HttpResponseBadRequest("Invalid form data")
@@ -58,7 +58,11 @@ def create_workout(request):
     """
     form = WorkoutForm(request.POST)
     if form.is_valid():
-        form.save()
+        workout = form.save()
+
+        # append item
+        components.append_workout_item(request, workout.id)
+
         return HttpResponse("Workout created successfully")
     return HttpResponseBadRequest("Invalid form data")
 
@@ -75,7 +79,7 @@ def create_workout_record(request):
         workout_record.save()
 
         # update item
-        components.update_calendar_item(workout_record.date)
+        components.update_calendar_item(request, workout_record.date)
         
         return HttpResponse("Workout record created successfully")
     return HttpResponseBadRequest("Invalid form data")
@@ -128,6 +132,10 @@ def delete_exercise(request, exercise_id):
     """
     exercise = get_object_or_404(Exercise, id=exercise_id)
     exercise.delete()
+
+    # delete item
+    components.delete_exercise_detail(request, exercise_id)
+
     return HttpResponse("Exercise deleted successfully")
 
 
@@ -138,6 +146,10 @@ def delete_workout(request, workout_id):
     """
     workout = get_object_or_404(Workout, id=workout_id)
     workout.delete()
+
+     # delete item
+    components.delete_workout_item(request, workout_id)
+
     return HttpResponse("Workout deleted successfully")
 
 
@@ -149,6 +161,6 @@ def delete_workout_record(request, workout_record_id):
     workout_record = get_object_or_404(WorkoutRecord, id=workout_record_id)
     workout_record.delete()
     
-    components.delete_workout_record_item(workout_record_id)
-    
+    components.delete_workout_record_item(request, workout_record_id)
+
     return HttpResponse("Workout record deleted successfully")

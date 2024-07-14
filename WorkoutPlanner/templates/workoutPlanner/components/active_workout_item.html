@@ -3,28 +3,22 @@
     <p>{{item.description}}</p>
     <div class="row">
 
-    {% if item.previous_record_item.records %}
-        <div class="framed primary" >
-            <p class="centered no-margin" >PREVIOUS<p>
-    {% endif %}  
+        {% if item.previous_record_item.records %}
+            <div class=" centered framed primary flex-item start">
+                <p class="centered no-margin" >PREVIOUS</p>
+        {% endif %}  
+        {% include 'workoutplanner/components/exercise_records_item.html' with item=item.previous_record_item %}
+        {% if item.previous_record_item.records %}
+            </div >
+        {% endif %}  
 
-    {% include 'workoutplanner/components/exercise_records_item.html' with item=item.previous_record_item %}
-
-    {% if item.previous_record_item.records %}
+        <div class="centered framed primary flex-item start">
+            <p class="centered no-margin" >TODAY</p>
+            {% include 'workoutplanner/components/exercise_records_item.html' with item=item.todays_record_item %}
         </div >
-    {% endif %}  
 
-    {% if item.todays_record_item.records %}
-        <div class="framed primary" >
-            <p class="centered no-margin" >TODAY<p>
-    {% endif %}
-
-    {% include 'workoutplanner/components/exercise_records_item.html' with item=item.todays_record_item %}
-
-    {% if item.todays_record_item.records %}
-        </div >
-    {% endif %}
-
-    {% include 'workoutplanner/forms/exercise_record_form.html' with form=form exercise_id=item.exercise_id %}
+        <div class="centered framed primary flex-item start">
+            {% include 'workoutplanner/forms/exercise_record_form.html' with form=form exercise_id=item.exercise_id %}
+        </div> 
     </div>
 </div>
